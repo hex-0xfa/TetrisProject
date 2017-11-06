@@ -12,19 +12,36 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
+        private int toggle;
         public TetrisFrom()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            toggle = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.Drawing.Graphics graphics = this.CreateGraphics();
-            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(0, 0, 300, 300);
-            graphics.DrawRectangle(System.Drawing.Pens.Red, rectangle);
+            if (toggle == 0)
+            {
+                Block myBlock = new Block(Color.Red, board, 1, 1);
+                myBlock.DisplayBlock();
+                toggle = 1;
+            }
+            else
+            {
+                Block myBlock = new Block(Color.Red, board, 1, 1);
+                myBlock.DisappearBlock();
+                toggle = 0;
+            }
+
+        }
+
+        private void TetrisFrom_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

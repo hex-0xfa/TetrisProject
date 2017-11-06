@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.board = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +38,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(474, 397);
+            this.button1.Location = new System.Drawing.Point(477, 321);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -47,13 +47,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // panel1
+            // board
             // 
-            this.panel1.BackColor = System.Drawing.Color.Blue;
-            this.panel1.Location = new System.Drawing.Point(30, 30);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(300, 540);
-            this.panel1.TabIndex = 1;
+            this.board.BackColor = System.Drawing.Color.Blue;
+            this.board.Location = new System.Drawing.Point(15, 48);
+            this.board.Name = "board";
+            this.board.Size = new System.Drawing.Size(350, 630);
+            this.board.TabIndex = 1;
             // 
             // menuStrip1
             // 
@@ -63,7 +63,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(600, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(682, 28);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -81,17 +81,17 @@
             // 
             // TetrisFrom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(600, 600);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(682, 700);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.board);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "TetrisFrom";
-            this.Text = "Form1";
+            this.Text = "Tetris";
+            this.Load += new System.EventHandler(this.TetrisFrom_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -102,7 +102,7 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel board;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
