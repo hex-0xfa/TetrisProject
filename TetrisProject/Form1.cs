@@ -12,6 +12,7 @@ namespace TetrisProject
 {
     public partial class Form1 : Form
     {
+        private int m;
         public Form1()
         {
             InitializeComponent();
