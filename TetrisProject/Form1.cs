@@ -16,9 +16,7 @@ namespace TetrisProject
         public TetrisFrom()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             toggle = 0;
         }
 
@@ -42,6 +40,16 @@ namespace TetrisProject
         private void TetrisFrom_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void label1_MouseHover(object sender, EventArgs e)
+        {
+            label1.ForeColor = Color.Green;
         }
     }
 }
