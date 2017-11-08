@@ -12,38 +12,27 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
-        private enum PlayStatus
+        private int i = 1;
+
+        private enum PlayStatus         //The Status of the current game
         {
-            NotPlay,
-            PlayNotPause,
+            NotPlay,                    //The game has not been played.
+            PlayNotPause,               //The 
             PlayPause
         }
 
         private PlayStatus currentGameStatus;
 
-        private int toggle;
         public TetrisFrom()
         {
             InitializeComponent();
             this.MaximizeBox = false;
-            toggle = 0;
             currentGameStatus = PlayStatus.NotPlay;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (toggle == 0)
-            {
-                Block myBlock = new Block(Color.Red, board, 1, 1);
-                myBlock.DisplayBlock();
-                toggle = 1;
-            }
-            else
-            {
-                Block myBlock = new Block(Color.Red, board, 1, 1);
-                myBlock.DisappearBlock();
-                toggle = 0;
-            }
+            i = 2;
 
         }
 
@@ -59,6 +48,7 @@ namespace TetrisProject
                 //generate event / call methods from timer class for timer for starting the game
                 currentGameStatus = PlayStatus.PlayNotPause;
                 label1.Text = "Pause";
+ 
             }
            else if (currentGameStatus == PlayStatus.PlayNotPause)
             {
@@ -83,6 +73,14 @@ namespace TetrisProject
         private void label1_MouseLeave(object sender, EventArgs e)
         {
             label1.ForeColor = Color.Red;
+        }
+
+        private void board_Paint(object sender, PaintEventArgs e)
+        {
+            //display the content of the board.
+            //display the piece if any.
+            Block myBlock = new Block(Color.Red, board, i, 1);
+            myBlock.DisplayBlock();
         }
     }
 }

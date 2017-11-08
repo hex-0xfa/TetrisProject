@@ -55,6 +55,7 @@
             this.board.Name = "board";
             this.board.Size = new System.Drawing.Size(350, 630);
             this.board.TabIndex = 1;
+            this.board.Paint += new System.Windows.Forms.PaintEventHandler(this.board_Paint);
             // 
             // menuStrip1
             // 
