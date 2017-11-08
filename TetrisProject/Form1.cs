@@ -12,12 +12,22 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
+        private enum PlayStatus
+        {
+            NotPlay,
+            PlayNotPause,
+            PlayPause
+        }
+
+        private PlayStatus currentGameStatus;
+
         private int toggle;
         public TetrisFrom()
         {
             InitializeComponent();
             this.MaximizeBox = false;
             toggle = 0;
+            currentGameStatus = PlayStatus.NotPlay;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,12 +54,35 @@ namespace TetrisProject
 
         private void label1_Click(object sender, EventArgs e)
         {
-           
+           if(currentGameStatus == PlayStatus.NotPlay)
+            {
+                //generate event / call methods from timer class for timer for starting the game
+                currentGameStatus = PlayStatus.PlayNotPause;
+                label1.Text = "Pause";
+            }
+           else if (currentGameStatus == PlayStatus.PlayNotPause)
+            {
+                //generate event / call methods from timer class for timer to pause the game
+                currentGameStatus = PlayStatus.PlayPause;
+                label1.Text = "Resume";
+            }
+           else if(currentGameStatus == PlayStatus.PlayPause)
+            {
+                //generate event / call methods from timer class for timer to resume the game
+                currentGameStatus = PlayStatus.PlayNotPause;
+                label1.Text = "Pause";
+            }
         }
 
         private void label1_MouseHover(object sender, EventArgs e)
         {
             label1.ForeColor = Color.Green;
+
+        }
+
+        private void label1_MouseLeave(object sender, EventArgs e)
+        {
+            label1.ForeColor = Color.Red;
         }
     }
 }
