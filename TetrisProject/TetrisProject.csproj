@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="GameConstants.cs" />
     <Compile Include="VisualConstants.cs" />
     <Compile Include="Form1.cs">

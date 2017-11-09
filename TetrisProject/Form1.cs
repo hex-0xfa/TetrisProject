@@ -17,8 +17,8 @@ namespace TetrisProject
         private enum PlayStatus         //The Status of the current game
         {
             NotPlay,                    //The game has not been played.
-            PlayNotPause,               //The 
-            PlayPause
+            PlayNotPause,               //The game is currently playing
+            PlayPause                   //The game is paused
         }
 
         private PlayStatus currentGameStatus;
@@ -26,12 +26,23 @@ namespace TetrisProject
         public TetrisFrom()
         {
             InitializeComponent();
-            currentGameStatus = PlayStatus.NotPlay;
+
+            //initalize the board item
+            
+            currentGameStatus = PlayStatus.NotPlay;      //initialize the state of the game to not playing
+
+            //Set the position and Size of Components
+
             this.ClientSize = new System.Drawing.Size(VisualConstants.WindowSizeX, VisualConstants.WindowsSizeY);  //Set the size of the window
 
             this.panelBoard.Location = new System.Drawing.Point(VisualConstants.leftMargin, VisualConstants.upperMargin + VisualConstants.MenuSzie ); //Set the location of the board
 
             this.panelBoard.Size = new System.Drawing.Size(VisualConstants.boardSizeX, VisualConstants.boardSizeY); //Set the size of the board
+
+            this.nextBlockLabel.Location = new System.Drawing.Point(VisualConstants.LabelX, VisualConstants.MenuSzie + VisualConstants.upperMargin);  //set the location of the next block label
+
+            //unfinished, finish if want to support variable board size feature
+
         }
 
         private void button1_Click(object sender, EventArgs e)

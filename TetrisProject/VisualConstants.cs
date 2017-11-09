@@ -43,6 +43,13 @@ namespace TetrisProject
 
         public static int WindowsSizeY = upperMargin + boardSizeY + lowerMargin + MenuSzie;              //The vertical size of the window
 
+        public static int LabelX = VisualConstants.boardSizeX + VisualConstants.leftMargin + VisualConstants.middleMargin;     //The left side of the label
+
+        public static int LabelWidth = 250;
+
+        public static int LabelHeight = 40;
+
+
         //Colors
 
         public static Color formColor = Color.Black;
@@ -53,6 +60,39 @@ namespace TetrisProject
 
         //Fonts
 
-        public static string DefaultFont = "Comic Sans MS";   //The default font to use when displaying texts.
+        public static string DefaultFont = "Comic Sans MS";   //The default font to use when displaying texts. (unused for now)
+
+        //Colors of the Pieces
+
+        public static Color colorLongPiece = Color.Red;
+
+        public static Color colorLeftLPiece = Color.Orange;
+
+         /* x
+         *  xxx
+         */
+
+        public static Color colorRightLPiece = Color.Yellow;
+
+        /*   x
+        *  xxx
+        */
+
+        public static Color colorRightSPiece = Color.Green;
+
+        /*  xx
+        *  xx
+        */
+
+        public static Color colorLeftSPiece = Color.Violet;
+
+        /* xx
+        *   xx
+        */
+
+        public static Color colorSquarePiece = Color.Cyan;
+
+        public static Color colorTPiece = Color.Black;
+
     }
 }

@@ -34,13 +34,13 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playPauseButton = new System.Windows.Forms.Label();
             this.nextBlockPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.nextBlockLabel = new System.Windows.Forms.Label();
+            this.linesLabel = new System.Windows.Forms.Label();
+            this.scoreLabel = new System.Windows.Forms.Label();
+            this.levelLabel = new System.Windows.Forms.Label();
+            this.socreNumber = new System.Windows.Forms.Label();
+            this.levelNumber = new System.Windows.Forms.Label();
+            this.linesNumber = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,10 +79,9 @@
             // 
             // playPauseButton
             // 
-            this.playPauseButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.playPauseButton.Font = new System.Drawing.Font("Comic Sans MS", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playPauseButton.ForeColor = System.Drawing.Color.Red;
-            this.playPauseButton.Location = new System.Drawing.Point(387, 608);
+            this.playPauseButton.Location = new System.Drawing.Point(390, 608);
             this.playPauseButton.Name = "playPauseButton";
             this.playPauseButton.Size = new System.Drawing.Size(250, 70);
             this.playPauseButton.TabIndex = 3;
@@ -95,108 +94,108 @@
             // nextBlockPanel
             // 
             this.nextBlockPanel.BackColor = System.Drawing.Color.Blue;
-            this.nextBlockPanel.Location = new System.Drawing.Point(444, 100);
+            this.nextBlockPanel.Location = new System.Drawing.Point(445, 98);
             this.nextBlockPanel.Name = "nextBlockPanel";
             this.nextBlockPanel.Size = new System.Drawing.Size(140, 140);
             this.nextBlockPanel.TabIndex = 4;
             // 
-            // label1
+            // nextBlockLabel
             // 
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Purple;
-            this.label1.Location = new System.Drawing.Point(389, 48);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 40);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Next Block";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            this.nextBlockLabel.BackColor = System.Drawing.Color.Transparent;
+            this.nextBlockLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nextBlockLabel.ForeColor = System.Drawing.Color.Purple;
+            this.nextBlockLabel.Location = new System.Drawing.Point(389, 48);
+            this.nextBlockLabel.Name = "nextBlockLabel";
+            this.nextBlockLabel.Size = new System.Drawing.Size(250, 40);
+            this.nextBlockLabel.TabIndex = 5;
+            this.nextBlockLabel.Text = "Next Block";
+            this.nextBlockLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.nextBlockLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // label2
+            // linesLabel
             // 
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Purple;
-            this.label2.Location = new System.Drawing.Point(389, 379);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(250, 40);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Lines";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linesLabel.BackColor = System.Drawing.Color.Transparent;
+            this.linesLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linesLabel.ForeColor = System.Drawing.Color.Purple;
+            this.linesLabel.Location = new System.Drawing.Point(390, 368);
+            this.linesLabel.Name = "linesLabel";
+            this.linesLabel.Size = new System.Drawing.Size(250, 40);
+            this.linesLabel.TabIndex = 6;
+            this.linesLabel.Text = "Lines";
+            this.linesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // scoreLabel
             // 
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Purple;
-            this.label3.Location = new System.Drawing.Point(389, 272);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(250, 40);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Score";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scoreLabel.BackColor = System.Drawing.Color.Transparent;
+            this.scoreLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scoreLabel.ForeColor = System.Drawing.Color.Purple;
+            this.scoreLabel.Location = new System.Drawing.Point(390, 258);
+            this.scoreLabel.Name = "scoreLabel";
+            this.scoreLabel.Size = new System.Drawing.Size(250, 40);
+            this.scoreLabel.TabIndex = 7;
+            this.scoreLabel.Text = "Score";
+            this.scoreLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label4
+            // levelLabel
             // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Purple;
-            this.label4.Location = new System.Drawing.Point(389, 485);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(250, 40);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Level";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.levelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.levelLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelLabel.ForeColor = System.Drawing.Color.Purple;
+            this.levelLabel.Location = new System.Drawing.Point(390, 478);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Size = new System.Drawing.Size(250, 40);
+            this.levelLabel.TabIndex = 8;
+            this.levelLabel.Text = "Level";
+            this.levelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label5
+            // socreNumber
             // 
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Orange;
-            this.label5.Location = new System.Drawing.Point(389, 325);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(250, 40);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "0";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.socreNumber.BackColor = System.Drawing.Color.Transparent;
+            this.socreNumber.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.socreNumber.ForeColor = System.Drawing.Color.Orange;
+            this.socreNumber.Location = new System.Drawing.Point(390, 308);
+            this.socreNumber.Name = "socreNumber";
+            this.socreNumber.Size = new System.Drawing.Size(250, 40);
+            this.socreNumber.TabIndex = 9;
+            this.socreNumber.Text = "0";
+            this.socreNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label6
+            // levelNumber
             // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Orange;
-            this.label6.Location = new System.Drawing.Point(389, 548);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(250, 40);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "0";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.levelNumber.BackColor = System.Drawing.Color.Transparent;
+            this.levelNumber.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelNumber.ForeColor = System.Drawing.Color.Orange;
+            this.levelNumber.Location = new System.Drawing.Point(390, 528);
+            this.levelNumber.Name = "levelNumber";
+            this.levelNumber.Size = new System.Drawing.Size(250, 40);
+            this.levelNumber.TabIndex = 10;
+            this.levelNumber.Text = "0";
+            this.levelNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label7
+            // linesNumber
             // 
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Orange;
-            this.label7.Location = new System.Drawing.Point(389, 434);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(250, 40);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "0";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linesNumber.BackColor = System.Drawing.Color.Transparent;
+            this.linesNumber.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linesNumber.ForeColor = System.Drawing.Color.Orange;
+            this.linesNumber.Location = new System.Drawing.Point(390, 418);
+            this.linesNumber.Name = "linesNumber";
+            this.linesNumber.Size = new System.Drawing.Size(250, 40);
+            this.linesNumber.TabIndex = 11;
+            this.linesNumber.Text = "0";
+            this.linesNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TetrisFrom
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(682, 700);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.linesNumber);
+            this.Controls.Add(this.levelNumber);
+            this.Controls.Add(this.socreNumber);
+            this.Controls.Add(this.levelLabel);
+            this.Controls.Add(this.scoreLabel);
+            this.Controls.Add(this.linesLabel);
+            this.Controls.Add(this.nextBlockLabel);
             this.Controls.Add(this.nextBlockPanel);
             this.Controls.Add(this.playPauseButton);
             this.Controls.Add(this.menuStrip1);
@@ -223,13 +222,13 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Label playPauseButton;
         private System.Windows.Forms.Panel nextBlockPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label nextBlockLabel;
+        private System.Windows.Forms.Label linesLabel;
+        private System.Windows.Forms.Label scoreLabel;
+        private System.Windows.Forms.Label levelLabel;
+        private System.Windows.Forms.Label socreNumber;
+        private System.Windows.Forms.Label levelNumber;
+        private System.Windows.Forms.Label linesNumber;
     }
 }
 
