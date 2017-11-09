@@ -13,9 +13,9 @@ namespace TetrisProject
         public Block(System.Drawing.Color myColor, Panel newPanel, int newRow, int newColumn)
         {
             blockColor = myColor;
-            sizeX = Constants.blockSizeX;
-            sizeY = Constants.blockSizeY;
-            margin = Constants.blockMargin;
+            sizeX = VisualConstants.blockSizeX;
+            sizeY = VisualConstants.blockSizeY;
+            margin = VisualConstants.blockMargin;
             myPanel = newPanel;
             row = newRow;
             column = newColumn;
@@ -41,7 +41,7 @@ namespace TetrisProject
         public void DisplayBlock()
         {
             Rectangle marginBlock = new Rectangle((column - 1) * sizeX, (row - 1) * sizeY, sizeX, sizeY);
-            SolidBrush myBrushMar = new SolidBrush(Constants.marginColor);
+            SolidBrush myBrushMar = new SolidBrush(VisualConstants.marginColor);
             myBlock.FillRectangle(myBrushMar, marginBlock);
             Rectangle innerBlock = new Rectangle((column - 1) * sizeX + margin, (row - 1) * sizeY + margin, sizeX - 2*margin, sizeY - 2*margin);
             SolidBrush myBrushCol = new SolidBrush(blockColor);
@@ -50,7 +50,7 @@ namespace TetrisProject
         public void DisappearBlock()
         {
             Rectangle OverrideBlock = new Rectangle((column - 1) * sizeX, (row - 1) * sizeY, sizeX, sizeY);
-            SolidBrush myBrush = new SolidBrush(Constants.boardBackground);
+            SolidBrush myBrush = new SolidBrush(VisualConstants.boardBackground);
             myBlock.FillRectangle(myBrush, OverrideBlock);
         }
     }

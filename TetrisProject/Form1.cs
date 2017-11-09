@@ -26,8 +26,12 @@ namespace TetrisProject
         public TetrisFrom()
         {
             InitializeComponent();
-            this.MaximizeBox = false;
             currentGameStatus = PlayStatus.NotPlay;
+            this.ClientSize = new System.Drawing.Size(VisualConstants.WindowSizeX, VisualConstants.WindowsSizeY);  //Set the size of the window
+
+            this.panelBoard.Location = new System.Drawing.Point(VisualConstants.leftMargin, VisualConstants.upperMargin + VisualConstants.MenuSzie ); //Set the location of the board
+
+            this.panelBoard.Size = new System.Drawing.Size(VisualConstants.boardSizeX, VisualConstants.boardSizeY); //Set the size of the board
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,40 +51,45 @@ namespace TetrisProject
             {
                 //generate event / call methods from timer class for timer for starting the game
                 currentGameStatus = PlayStatus.PlayNotPause;
-                label1.Text = "Pause";
+                playPauseButton.Text = "Pause";
  
             }
            else if (currentGameStatus == PlayStatus.PlayNotPause)
             {
                 //generate event / call methods from timer class for timer to pause the game
                 currentGameStatus = PlayStatus.PlayPause;
-                label1.Text = "Resume";
+                playPauseButton.Text = "Resume";
             }
            else if(currentGameStatus == PlayStatus.PlayPause)
             {
                 //generate event / call methods from timer class for timer to resume the game
                 currentGameStatus = PlayStatus.PlayNotPause;
-                label1.Text = "Pause";
+                playPauseButton.Text = "Pause";
             }
         }
 
         private void label1_MouseHover(object sender, EventArgs e)
         {
-            label1.ForeColor = Color.Green;
+            playPauseButton.ForeColor = Color.Green;
 
         }
 
         private void label1_MouseLeave(object sender, EventArgs e)
         {
-            label1.ForeColor = Color.Red;
+            playPauseButton.ForeColor = Color.Red;
         }
 
         private void board_Paint(object sender, PaintEventArgs e)
         {
             //display the content of the board.
             //display the piece if any.
-            Block myBlock = new Block(Color.Red, board, i, 1);
+            Block myBlock = new Block(Color.Red, panelBoard, i, 1);
             myBlock.DisplayBlock();
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
