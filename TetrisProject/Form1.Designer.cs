@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelBoard = new System.Windows.Forms.Panel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.tetrisMenu = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playPauseButton = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             this.levelNumber = new System.Windows.Forms.Label();
             this.linesNumber = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.menuStrip1.SuspendLayout();
+            this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelBoard
@@ -55,28 +55,28 @@
             this.panelBoard.TabIndex = 1;
             this.panelBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.board_Paint);
             // 
-            // menuStrip1
+            // tetrisMenu
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tetrisMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.tetrisMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gameToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(682, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.tetrisMenu.Location = new System.Drawing.Point(0, 0);
+            this.tetrisMenu.Name = "tetrisMenu";
+            this.tetrisMenu.Size = new System.Drawing.Size(682, 28);
+            this.tetrisMenu.TabIndex = 2;
+            this.tetrisMenu.Text = "menuStrip1";
             // 
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.gameToolStripMenuItem.Text = "Game";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // playPauseButton
@@ -200,18 +200,18 @@
             this.Controls.Add(this.nextBlockLabel);
             this.Controls.Add(this.nextBlockPanel);
             this.Controls.Add(this.playPauseButton);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.tetrisMenu);
             this.Controls.Add(this.panelBoard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.tetrisMenu;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "TetrisFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
             this.Load += new System.EventHandler(this.TetrisFrom_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.tetrisMenu.ResumeLayout(false);
+            this.tetrisMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,7 +219,7 @@
 
         #endregion
         private System.Windows.Forms.Panel panelBoard;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip tetrisMenu;
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Label playPauseButton;

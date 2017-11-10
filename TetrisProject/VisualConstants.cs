@@ -45,9 +45,9 @@ namespace TetrisProject
 
         public static int LabelX = VisualConstants.boardSizeX + VisualConstants.leftMargin + VisualConstants.middleMargin;     //The left side of the label
 
-        public static int LabelWidth = 250;
+        public static int LabelWidth = 250;                 //The length of all labels
 
-        public static int LabelHeight = 40;
+        public static int LabelHeight = 40;                 //The Height of all labels except play button
 
 
         //Colors

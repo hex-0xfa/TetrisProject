@@ -12,7 +12,6 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
-        private int i = 1;
 
         private enum PlayStatus         //The Status of the current game
         {
@@ -43,16 +42,15 @@ namespace TetrisProject
 
             this.nextBlockLabel.Location = new System.Drawing.Point(VisualConstants.LabelX, VisualConstants.MenuSzie + VisualConstants.upperMargin);  //set the location of the next block label
 
-            //unfinished, finish if want to support variable board size feature
+            this.nextBlockLabel.Size = new System.Drawing.Size(VisualConstants.LabelWidth, VisualConstants.LabelHeight); //Set the size of the next block label
+
+            this.BackColor = VisualConstants.formColor;    //Set the background color
+
+            this.panelBoard.BackColor = VisualConstants.boardBackground;    //set the background of the panel
+
+
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i = 2;
-
-        }
-
         private void TetrisFrom_Load(object sender, EventArgs e)
         {
 
@@ -92,8 +90,8 @@ namespace TetrisProject
         {
             //display the content of the board.
             //display the piece if any.
-            Block myBlock = new Block(Color.Red, panelBoard, i, 1);
-            myBlock.DisplayBlock();
+BlockGraphics myBlock = new BlockGraphics(Color.Red, panelBoard, 1, 1);
+myBlock.DisplayBlock();
         }
 
         private void label1_Click_1(object sender, EventArgs e)

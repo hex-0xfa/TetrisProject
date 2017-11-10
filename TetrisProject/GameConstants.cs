@@ -25,8 +25,10 @@ namespace TetrisProject
         public static double speedIncrease = 0.8;  //The increase of falling speed of the block for each level advanced
 
         //falling speed = baseInterval * speedIncrease ^ (currentLevel - 1)
+        
+        public static int nextBlockPanelRow = 4;  //The row number of next block panel
 
-
+        public static int nextBlockPanelColumn = 4;   //The column number of next block panel
 
     }
 }
