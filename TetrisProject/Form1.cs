@@ -23,6 +23,8 @@ namespace TetrisProject
 
         private PlayStatus currentGameStatus;
 
+        private static int currentLevel = 1;
+
         public TetrisFrom()
         {
             InitializeComponent();
@@ -61,21 +63,17 @@ namespace TetrisProject
            if(currentGameStatus == PlayStatus.NotPlay)
             {
                 //generate event / call methods from timer class for timer for starting the game
-                currentGameStatus = PlayStatus.PlayNotPause;
-                playPauseButton.Text = "Pause";
- 
+                Play(this);
             }
            else if (currentGameStatus == PlayStatus.PlayNotPause)
             {
                 //generate event / call methods from timer class for timer to pause the game
-                currentGameStatus = PlayStatus.PlayPause;
-                playPauseButton.Text = "Resume";
+                Pause(this);
             }
            else if(currentGameStatus == PlayStatus.PlayPause)
             {
                 //generate event / call methods from timer class for timer to resume the game
-                currentGameStatus = PlayStatus.PlayNotPause;
-                playPauseButton.Text = "Pause";
+                Resume(this);
             }
         }
 
@@ -101,6 +99,33 @@ namespace TetrisProject
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Play(TetrisFrom odj)
+        {
+
+            currentGameStatus = PlayStatus.PlayNotPause;
+            playPauseButton.Text = "Pause";
+            timer1.Enabled = true;
+            SetSpeed(currentLevel);
+            timer1.Start();
+
+        } 
+        private void Pause(TetrisFrom odj)
+        {
+            timer1.Stop();
+            currentGameStatus = PlayStatus.PlayPause;
+            playPauseButton.Text = "Resume";
+        }
+        private void Resume(TetrisFrom odj)
+        {
+            timer1.Start();
+            currentGameStatus = PlayStatus.PlayNotPause;
+            playPauseButton.Text = "Pause";
+        }
+        private void SetSpeed(int Level)
+        {
+            timer1.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)Level));
         }
     }
 }
