@@ -19,10 +19,10 @@ namespace TetrisProject
     {
         public enum RotationStateClockwise             //The rotation status enum
         {
-            CW0,                                       //0 rotation
-            CW90,                                      //90 rotation
-            CW180,                                     //180 rotation
-            CW270                                      //270 rotation
+            CW0,                                       //0 clockwise rotation
+            CW90,                                      //90 clockwise rotation
+            CW180,                                     //180 clockwise rotation
+            CW270                                      //270 clockwise rotation
         }
 
         private int piececode = 0;                     //to hold which piece the block is for calculation and diaplay purpose
@@ -67,12 +67,11 @@ namespace TetrisProject
             //Set the rotation of the piece
             MyRotationSateClockwise = newRotationSateClockwise;
             //Set the position of the piece
-            row = newRow;
-            column = newRow;
+            pieceRow = newRow;
+            pieceColumn = newRow;
             PieceCode = newPieceCode;
-            //initialize the piece grid in the child class
+            PieceGrid = new int[GameConstants.pieceGridSizeY, GameConstants.pieceGridSizeX];             //set the fill block, needs to be setted specificly in child class
         }
-
 
         private int[,] PieceGrid;               //4x4 grid of the piece configration
 
@@ -80,7 +79,7 @@ namespace TetrisProject
         {
             if((row > 0) && (row <= GameConstants.pieceGridSizeY) && (column > 0) && (column <= GameConstants.pieceGridSizeX))
             {
-                PieceGrid[row - 1, column - 1] = PieceCode;
+                PieceGrid[row - 1, column - 1] = 1;         //only store 0 or 1 in piece grid
             }
             //throw an outof range exception
         }
@@ -95,9 +94,70 @@ namespace TetrisProject
             return 0;
         }
 
-        public abstract void Display(Panel DisplayPanel);         
+        public void DisplayBoard(Panel DisplayPanel) //Dispaly the piece on board
+        {
+            for(int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 1; column <= GameConstants.pieceGridSizeX; column++)
+                {
+                    if (PieceGrid[row - 1, column - 1] == 1)
+                    {
+                        BlockGraphics.DisplayBlock(piececode, DisplayPanel, pieceRow - GameConstants.pieceGridSizeY + row - 1, pieceColumn - GameConstants.pieceGridSizeX + 1 + column - 1);
+                    }
+                    else
+                    {
+                        //don't display anything if no block is here
+                    }
+                }
+            }
+        }
 
-        public abstract void Disappear(Panel DisplayPanel);
+        public void DisappearBoard(Panel DisplayPanel)  //Disappear the piece on board
+        {
+            for (int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 1; column <= GameConstants.pieceGridSizeX; column++)
+                {
+                    if (PieceGrid[row - 1, column - 1] == 1)
+                    {
+                        BlockGraphics.DisappearBlock(DisplayPanel, pieceRow - GameConstants.pieceGridSizeY + row - 1, pieceColumn - GameConstants.pieceGridSizeX + 1 + column -1);
+                    }
+                    else
+                    {
+                        //don't disappear anything if no block is here
+                    }
+                }
+            }
+        }
+
+        public void DisplayNext(Panel DisplayPanel)  //Dispaly the piece on the next piece panel
+        {
+            for (int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 1; column <= GameConstants.pieceGridSizeX; column++)
+                {
+                    if (PieceGrid[row - 1, column - 1] == 1)
+                    {
+                        BlockGraphics.DisplayBlock(piececode, DisplayPanel, row ,column);
+                    }
+                    else
+                    {
+                        //don't display anything if no block is here
+                    }
+                }
+            }
+        }
+
+        public static void DisappearNext(Panel DisplayPanel) //Clear the next piece panel
+        {
+            for (int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 1; column <= GameConstants.pieceGridSizeX; column++)
+                {
+                    BlockGraphics.DisappearBlock(DisplayPanel, row, column);
+                }
+            }
+        }
 
         //for the following code, the int returns 0 for successful move, 1 for other pieces or walls blocking (including falling)
 
@@ -114,10 +174,24 @@ namespace TetrisProject
         //Normally we don't need this method, could be implemented in cheat mode
         //public abstract int MovingUp(Board myBoard);
 
-        private int row;
+        private int pieceRow;                  //from 1 to 22
 
-        private int column;
+        private int pieceColumn;               //from 1 to 13
 
+        public static RotationStateClockwise RandomOrientation ()   //return a random orientation for a piece
+        {
+            return RotationStateClockwise.CW0;
+        }
 
+        public static int RandomPosition()         //return a random position for a piece
+        {
+            return 0;
+        }
+
+        public abstract int returnLeftMostBlock();  //return 1 , 2, 3 or 4, counting from left
+
+        public abstract int returnRightMostBlock(); //return 1, 2, 3 or 4, counting from right
+
+        public abstract int returnBottomMostBlock(); //return 1, 2, 3, or 4, counting from bottom
     }
 }

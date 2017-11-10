@@ -16,6 +16,9 @@ namespace TetrisProject
 
             switch (blcokNumber)            //needs to be changed if the number system is changed, set the color according to the code of each pieces
             {
+                case 0:
+                    //nothing happens
+                    break;
                 case GameConstants.numberLongPiece:
                     blockColor = VisualConstants.colorLongPiece;
                     break;

@@ -68,5 +68,10 @@ namespace TetrisProject
 
         public const int numberTPiece = 7;
 
+
+        public static int validPiecePositionX = pieceGridSizeX - 1 + columnNumber;
+
+        public static int validPiecePostionY = pieceGridSizeY + rowNumber;
+
     }
 }
