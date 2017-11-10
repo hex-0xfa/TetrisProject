@@ -19,13 +19,24 @@ namespace TetrisProject
             myPanel = newPanel;
         }
 
-        public void DisplayBoard()
+        public void DisplayBoard()         //display the board as a whole
         {
             for(int row = 1; row <= GameConstants.rowNumber; row++)
             {
                 for(int column = 1; column <= GameConstants.columnNumber; column++)
                 {
                     BlockGraphics.DisplayBlock(BoardArray[row - 1, column - 1], myPanel, row, column);
+                }
+            }
+        }
+
+        public static void ClearDisplayBoard(Panel newPanel)     //clear the board display to let new pieces be on it (should be used first because we need to display the piece as well
+        {
+            for (int row = 1; row <= GameConstants.rowNumber; row++)
+            {
+                for (int column = 1; column <= GameConstants.columnNumber; column++)
+                {
+                    BlockGraphics.DisappearBlock(newPanel, row, column);
                 }
             }
         }
@@ -46,17 +57,17 @@ namespace TetrisProject
 
                     if(clear == true)
                     {
-                        linesCleared++;       //increase the line cleared
+                        linesCleared++;       //increase the lines cleared
                         for (int tryRow = row; tryRow >= 1; tryRow--)
                         {
                             for (int Trycolumn = 1; column <= GameConstants.columnNumber; column++)
                             {
-                                BoardArray[tryRow, Trycolumn] = BoardArray[tryRow - 1, Trycolumn];  //assign this line to the previous line
+                                BoardArray[tryRow - 1, Trycolumn] = BoardArray[tryRow - 1 - 1, Trycolumn -1];  //assign this line to the previous line
                             }
                         }
                         for (int Trycolumn = 1; column <= GameConstants.columnNumber; column++)
                         {
-                            BoardArray[0, Trycolumn] = 0;   //assign the top line to all zero
+                            BoardArray[0, Trycolumn - 1] = 0;   //assign the top line to all zero
                         }
                     }
                 }
@@ -64,7 +75,7 @@ namespace TetrisProject
             return linesCleared;
         }
 
-        public bool IsPieceInHere(int row, int column)
+        public bool IsPieceInHere(int row, int column)  //naybe used by pieces to check whether it can go somewhere
         {
             if(BoardArray[row - 1, column - 1] != 0)   //may reference out of bound
             {
@@ -76,9 +87,9 @@ namespace TetrisProject
             }
         }
 
-        public void AddPiece(Piece myPiece)
+        public void AddPiece(Piece myPiece)   //probably need to intergrate the check and clear
         {
-
+            
         }
     }
 }
