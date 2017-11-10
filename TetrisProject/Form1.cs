@@ -12,6 +12,11 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
+        private Piece currentPiece;               //used to point to the current piece
+
+        private Piece nextPiece;                  //used to point to the next piece
+
+        private Board myBoard;                    //used to do the calculations and provide abstaction with the board class
 
         private enum PlayStatus         //The Status of the current game
         {
@@ -22,7 +27,7 @@ namespace TetrisProject
 
         private PlayStatus currentGameStatus;
 
-        private static int currentLevel = 1;
+        private static int currentLevel = 1;        //The current level of this game
 
         public TetrisFrom()
         {
@@ -48,15 +53,13 @@ namespace TetrisProject
 
             this.panelBoard.BackColor = VisualConstants.boardBackground;    //set the background of the panel
 
-
-
         }
         private void TetrisFrom_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void PlayPauseButton_Click(object sender, EventArgs e)
         {
            if(currentGameStatus == PlayStatus.NotPlay)
             {
@@ -86,19 +89,6 @@ namespace TetrisProject
             playPauseButton.ForeColor = Color.Red;
         }
 
-        private void board_Paint(object sender, PaintEventArgs e)
-        {
-            //display the content of the board.
-            //display the piece if any.
-BlockGraphics myBlock = new BlockGraphics(Color.Red, panelBoard, 1, 1);
-myBlock.DisplayBlock();
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void Play(TetrisFrom odj)
         {
 
@@ -124,6 +114,18 @@ myBlock.DisplayBlock();
         private void SetSpeed(int Level)
         {
             timer1.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)Level));
+        }
+
+        private void panelBoard_Paint(object sender, PaintEventArgs e)   //hanlde the reprinting of the board panel
+        {
+            //synchronize the redisplay content with active dispaly
+            BlockGraphics.DisplayBlock(5, panelBoard, 17, 10);
+        }
+
+        private void nextBlockPanel_Paint(object sender, PaintEventArgs e)   //handel the reprinting of the nextblock panel
+        {
+            //synchronize the redisplay content with active dispaly
+            BlockGraphics.DisplayBlock(2, nextBlockPanel, 3, 3);
         }
     }
 }

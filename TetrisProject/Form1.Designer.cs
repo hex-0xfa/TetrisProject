@@ -53,7 +53,7 @@
             this.panelBoard.Name = "panelBoard";
             this.panelBoard.Size = new System.Drawing.Size(350, 630);
             this.panelBoard.TabIndex = 1;
-            this.panelBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.board_Paint);
+            this.panelBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBoard_Paint);
             // 
             // tetrisMenu
             // 
@@ -89,7 +89,7 @@
             this.playPauseButton.TabIndex = 3;
             this.playPauseButton.Text = "Play";
             this.playPauseButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.playPauseButton.Click += new System.EventHandler(this.label1_Click);
+            this.playPauseButton.Click += new System.EventHandler(this.PlayPauseButton_Click);
             this.playPauseButton.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             this.playPauseButton.MouseHover += new System.EventHandler(this.label1_MouseHover);
             // 
@@ -100,6 +100,7 @@
             this.nextBlockPanel.Name = "nextBlockPanel";
             this.nextBlockPanel.Size = new System.Drawing.Size(140, 140);
             this.nextBlockPanel.TabIndex = 4;
+            this.nextBlockPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.nextBlockPanel_Paint);
             // 
             // nextBlockLabel
             // 
@@ -112,7 +113,6 @@
             this.nextBlockLabel.TabIndex = 5;
             this.nextBlockLabel.Text = "Next Block";
             this.nextBlockLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.nextBlockLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // linesLabel
             // 
