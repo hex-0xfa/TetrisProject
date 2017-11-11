@@ -28,11 +28,11 @@ namespace TetrisProject
                 case GameConstants.numberRightLPiece:
                     blockColor = VisualConstants.colorRightLPiece;
                     break;
-                case GameConstants.numberLeftSPiece:
-                    blockColor = VisualConstants.colorLeftSPiece;
-                    break;
                 case GameConstants.numberRightSPiece:
                     blockColor = VisualConstants.colorRightSPiece;
+                    break;
+                case GameConstants.numberLeftSPiece:
+                    blockColor = VisualConstants.colorLeftSPiece;
                     break;
                 case GameConstants.numberSquarePiece:
                     blockColor = VisualConstants.colorSquarePiece;

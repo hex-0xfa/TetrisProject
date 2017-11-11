@@ -48,7 +48,13 @@
     <Compile Include="BlockGraphics.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="GameConstants.cs" />
+    <Compile Include="LeftLPiece.cs" />
+    <Compile Include="LeftSPiece.cs" />
     <Compile Include="LongPiece.cs" />
+    <Compile Include="RightLPiece.cs" />
+    <Compile Include="RIghtSPiece.cs" />
+    <Compile Include="SquarePiece.cs" />
+    <Compile Include="TPiece.cs" />
     <Compile Include="VisualConstants.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -75,15 +75,6 @@ namespace TetrisProject
 
         protected int[,] PieceGrid;               //4x4 grid of the piece configration
 
-        protected void setGrid (int row, int column)  //set the piece grid with a specific value
-        {
-            if((row > 0) && (row <= GameConstants.pieceGridSizeY) && (column > 0) && (column <= GameConstants.pieceGridSizeX))
-            {
-                PieceGrid[row - 1, column - 1] = 1;         //only store 0 or 1 in piece grid
-            }
-            //throw an outof range exception
-        }
-
         public int getGrid (int row, int column)   //get a specific value from the piece grid
         {
             if ((row > 0) && (row <= GameConstants.pieceGridSizeY) && (column > 0) && (column <= GameConstants.pieceGridSizeX))
@@ -195,17 +186,30 @@ namespace TetrisProject
             }
         }
 
-        private static void Rotateclockwise(int [,] myPieceGrid)
+        protected static int[,] RotateCounterclockwise(int [,] myPieceGrid)
         {
             int[,] newPieceGird = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  //need to be changed for chanoing block size.
             for (int i = 0; i < GameConstants.pieceGridSizeX; i++)
             {
                 for (int j = GameConstants.pieceGridSizeY - 1; j >= 0; j--)
                 {
-                    newPieceGird[j, i] = myPieceGrid[i, GameConstants.pieceGridSizeY - j];
+                    newPieceGird[j, i] = myPieceGrid[i, GameConstants.pieceGridSizeY - 1 - j];
                 }
             }
-            myPieceGrid = newPieceGird;
+            return newPieceGird;
+        }
+
+        protected static int[,] RotateClockwise(int[,] myPieceGrid)
+        {
+            int[,] newPieceGird = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  //need to be changed for chanoing block size.
+            for (int i = 0; i < GameConstants.pieceGridSizeX; i++)
+            {
+                for (int j = GameConstants.pieceGridSizeY - 1; j >= 0; j--)
+                {
+                    newPieceGird[i, GameConstants.pieceGridSizeY - 1 - j] = myPieceGrid[j, i];
+                }
+            }
+            return newPieceGird;
         }
 
         public int CheckRotateClockwise(Board myBoard)
@@ -220,7 +224,7 @@ namespace TetrisProject
                 }
             }
 
-            Piece.Rotateclockwise(myPieceGrid);
+            myPieceGrid = Piece.RotateClockwise(myPieceGrid);
 
             int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0);
 
@@ -231,6 +235,7 @@ namespace TetrisProject
             }
             else
             {
+                //Need to reset the rotation code
                 //it can be rotated
                 PieceGrid = myPieceGrid;
                 return 0;
@@ -249,9 +254,7 @@ namespace TetrisProject
                 }
             }
 
-            Piece.Rotateclockwise(myPieceGrid);
-            Piece.Rotateclockwise(myPieceGrid);
-            Piece.Rotateclockwise(myPieceGrid);
+            myPieceGrid = Piece.RotateCounterclockwise(myPieceGrid);
 
             int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0);
 
@@ -263,6 +266,7 @@ namespace TetrisProject
             else
             {
                 //it can be rotated
+                //need to reset the rotation code
                 PieceGrid = myPieceGrid;
                 return 0;
             }
@@ -330,7 +334,7 @@ namespace TetrisProject
             }
         }
 
-        public static RotationStateClockwise RandomOrientation ()   //return a random orientation for a piece
+        private static RotationStateClockwise RandomOrientation ()   //return a random orientation for a piece
         {
             Random rand = new Random(Guid.NewGuid().GetHashCode());
             int i = rand.Next(1, 5);  //return 1, 2, 3 or 4
@@ -348,11 +352,6 @@ namespace TetrisProject
                     //throw an exception
                     return RotationStateClockwise.CW0;
             }
-        }
-
-        public static int SetPosition()         //return a random position for a piece
-        {
-            return 0;
         }
 
         public static int ReturnLeftMostBlock(int[,] myPieceGrid)  //return 1 , 2, 3 or 4, counting from top, left
@@ -417,22 +416,22 @@ namespace TetrisProject
                     myPieceGrid = LongPiece.ConfigureMap();
                     break;
                 case GameConstants.numberLeftLPiece:
-                    // Add later
+                    myPieceGrid = LeftLPiece.ConfigureMap();
                     break;
                 case GameConstants.numberRightLPiece:
-                    // Add later
-                    break;
-                case GameConstants.numberLeftSPiece:
-                    // Add later
+                    myPieceGrid = RightLPiece.ConfigureMap();
                     break;
                 case GameConstants.numberRightSPiece:
-                    // Add later
+                    myPieceGrid = RIghtSPiece.ConfigureMap();
+                    break;
+                case GameConstants.numberLeftSPiece:
+                    myPieceGrid = LeftSPiece.ConfigureMap();
                     break;
                 case GameConstants.numberSquarePiece:
-                    // Add later
+                    myPieceGrid = SquarePiece.ConfigureMap();
                     break;
                 case GameConstants.numberTPiece:
-                    // Add later
+                    myPieceGrid = TPiece.ConfigureMap();
                     break;
                 default:
                     //return an error here
@@ -443,7 +442,7 @@ namespace TetrisProject
 
             for(Piece.RotationStateClockwise incrementRotationStateClockwise = RotationStateClockwise.CW0; incrementRotationStateClockwise < myRotationStateClockwise; incrementRotationStateClockwise++)
             {
-                Piece.Rotateclockwise(myPieceGrid);
+                myPieceGrid = Piece.RotateClockwise(myPieceGrid);
             }
 
             row = GameConstants.pieceGridSizeY + 1 - Piece.ReturnBottomMostBlock(myPieceGrid);
@@ -453,7 +452,53 @@ namespace TetrisProject
             int rightMostColumn = GameConstants.pieceGridSizeX + GameConstants.columnNumber - Piece.ReturnRightMostBlock(myPieceGrid);
 
             Random rand2 = new Random(Guid.NewGuid().GetHashCode());
-            column = rand2.Next(leftMostColumn, rightMostColumn + 1);  //return 1, 2, 3, 4, 5, 6, 7
+
+            column = rand2.Next(leftMostColumn, rightMostColumn + 1);
+        }
+
+        public static Piece GenerateRandomPieceOnTop()
+        {
+            Piece myPiece;
+
+            int myPieceCode = 1;
+            Piece.RotationStateClockwise myRotationStateClockwise = Piece.RotationStateClockwise.CW0;
+            int myRow = 1;
+            int myColumn = 1;
+
+            Piece.SetRandomPieceInitialPosition(ref myRow, ref myColumn, ref myRotationStateClockwise, ref myPieceCode);
+
+            switch(myPieceCode)
+            {
+                case 0:
+                    myPiece = new LongPiece(myRotationStateClockwise, myRow, myColumn);  //could never happen
+                    break;
+                case GameConstants.numberLongPiece:
+                    myPiece = new LongPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberLeftLPiece:
+                    myPiece = new LeftLPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberRightLPiece:
+                    myPiece = new RightLPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberRightSPiece:
+                    myPiece = new RIghtSPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberLeftSPiece:
+                    myPiece = new LeftSPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberSquarePiece:
+                    myPiece = new SquarePiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                case GameConstants.numberTPiece:
+                    myPiece = new TPiece(myRotationStateClockwise, myRow, myColumn);
+                    break;
+                default:
+                    myPiece = new LongPiece(myRotationStateClockwise, myRow, myColumn);   //could never happen
+                    break;
+            }
+
+            return myPiece;
         }
     }
 }

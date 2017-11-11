@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace TetrisProject
 {
-    class LongPiece : Piece
+    class TPiece : Piece
     {
-        public LongPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)
-         : base (newRotationSateClockwise, newRow, newColumn, GameConstants.numberLongPiece)
+        public TPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)
+         : base (newRotationSateClockwise, newRow, newColumn, GameConstants.numberTPiece)
         {
-            PieceGrid = LongPiece.ConfigureMap();
+            PieceGrid = TPiece.ConfigureMap();
             for (Piece.RotationStateClockwise incrementRotationStateClockwise = RotationStateClockwise.CW0; incrementRotationStateClockwise < MyRotationSateClockwise; incrementRotationStateClockwise++)
             {
                 PieceGrid = Piece.RotateClockwise(PieceGrid);
@@ -20,9 +20,8 @@ namespace TetrisProject
 
         public static int[,] ConfigureMap()
         {
-            int[,] newPieceGrid = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 } };
+            int[,] newPieceGrid = { { 0, 0, 0, 0 }, { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 0, 0, 0 } };
             return newPieceGrid;
         }
-
     }
 }

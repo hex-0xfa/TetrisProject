@@ -53,7 +53,11 @@ namespace TetrisProject
 
             this.panelBoard.BackColor = VisualConstants.boardBackground;    //set the background of the panel
 
-            currentPiece = new LongPiece(Piece.RotationStateClockwise.CW0, 5, 4);
+
+
+            currentPiece = Piece.GenerateRandomPieceOnTop();
+
+            nextPiece = Piece.GenerateRandomPieceOnTop();
 
         }
         private void TetrisFrom_Load(object sender, EventArgs e)
@@ -120,15 +124,14 @@ namespace TetrisProject
 
         private void panelBoard_Paint(object sender, PaintEventArgs e)   //hanlde the reprinting of the board panel
         {
+            nextPiece.DisplayBoard(panelBoard);
             //synchronize the redisplay content with active dispaly
-            currentPiece.DisplayBoard(panelBoard);
-            BlockGraphics.DisplayBlock(2, panelBoard, 2, 1);
         }
 
         private void nextBlockPanel_Paint(object sender, PaintEventArgs e)   //handel the reprinting of the nextblock panel
         {
             //synchronize the redisplay content with active dispaly
-            BlockGraphics.DisplayBlock(2, nextBlockPanel, 3, 3);
+            nextPiece.DisplayNext(nextBlockPanel);
         }
     }
 }
