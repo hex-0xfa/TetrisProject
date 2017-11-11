@@ -48,6 +48,7 @@
     <Compile Include="BlockGraphics.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="GameConstants.cs" />
+    <Compile Include="LongPiece.cs" />
     <Compile Include="VisualConstants.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -48,27 +48,27 @@ namespace TetrisProject
             for(int row = GameConstants.rowNumber; row >= 1; row--)
             {
                 clear = true;
-                for(int column = 1; column <= GameConstants.columnNumber; column++)
+                for (int column = 1; column <= GameConstants.columnNumber; column++)
                 {
                     if (BoardArray[row - 1, column - 1] == 0)
                     {
                         clear = false;
                     }
+                }
 
-                    if(clear == true)
+               if(clear == true)
+               {
+                    linesCleared++;       //increase the lines cleared
+                    for (int tryRow = row; tryRow > 1; tryRow--)
                     {
-                        linesCleared++;       //increase the lines cleared
-                        for (int tryRow = row; tryRow >= 1; tryRow--)
+                        for (int Trycolumn = 1; Trycolumn <= GameConstants.columnNumber; Trycolumn++)
                         {
-                            for (int Trycolumn = 1; column <= GameConstants.columnNumber; column++)
-                            {
-                                BoardArray[tryRow - 1, Trycolumn] = BoardArray[tryRow - 1 - 1, Trycolumn -1];  //assign this line to the previous line
-                            }
+                            BoardArray[tryRow - 1, Trycolumn - 1] = BoardArray[tryRow - 1 - 1, Trycolumn -1];  //assign this line to the previous line
                         }
-                        for (int Trycolumn = 1; column <= GameConstants.columnNumber; column++)
-                        {
-                            BoardArray[0, Trycolumn - 1] = 0;   //assign the top line to all zero
-                        }
+                    }
+                    for (int Trycolumn = 1; Trycolumn <= GameConstants.columnNumber; Trycolumn++)
+                    {
+                        BoardArray[0, Trycolumn - 1] = 0;   //assign the top line to all zero
                     }
                 }
             }
@@ -89,7 +89,17 @@ namespace TetrisProject
 
         public void AddPiece(Piece myPiece)   //probably need to intergrate the check and clear
         {
-            
+            for (int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 1; column <= GameConstants.pieceGridSizeX; column++)
+                {
+                    if(myPiece.getGrid(row , column ) == 1)
+                    {
+                        BoardArray[myPiece.PieceRow + row - GameConstants.pieceGridSizeY - 1 - 1, myPiece.PieceColumn + column - GameConstants.pieceGridSizeX - 1] = myPiece.PieceCode;
+                    }
+                   //don't add if the content is zero
+                }
+            }
         }
     }
 }
