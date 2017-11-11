@@ -53,7 +53,7 @@ namespace TetrisProject
 
             this.panelBoard.BackColor = VisualConstants.boardBackground;    //set the background of the panel
 
-
+            myBoard = new Board(panelBoard);
 
             currentPiece = Piece.GenerateRandomPieceOnTop();
 
@@ -124,7 +124,8 @@ namespace TetrisProject
 
         private void panelBoard_Paint(object sender, PaintEventArgs e)   //hanlde the reprinting of the board panel
         {
-            nextPiece.DisplayBoard(panelBoard);
+            currentPiece.DisplayBoard(panelBoard);
+            myBoard.DisplayBoard();
             //synchronize the redisplay content with active dispaly
         }
 
@@ -132,6 +133,66 @@ namespace TetrisProject
         {
             //synchronize the redisplay content with active dispaly
             nextPiece.DisplayNext(nextBlockPanel);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            currentPiece.DisappearBoard(panelBoard);
+
+            int status = currentPiece.Falling(myBoard);
+
+            if(status == 1)
+            {
+                myBoard.AddPiece(currentPiece);
+                myBoard.CheckAndClearLines();
+                Board.ClearDisplayBoard(panelBoard);
+                myBoard.DisplayBoard();
+                currentPiece = nextPiece;
+                nextPiece = Piece.GenerateRandomPieceOnTop();
+                currentPiece.DisplayBoard(panelBoard);
+                Piece.DisappearNext(nextBlockPanel);
+                nextPiece.DisplayNext(nextBlockPanel);
+            }
+            else
+            {
+                currentPiece.DisplayBoard(panelBoard);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            currentPiece.DisappearBoard(panelBoard);
+
+            int status = currentPiece.MoveLeft(myBoard);
+
+            currentPiece.DisplayBoard(panelBoard);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            currentPiece.DisappearBoard(panelBoard);
+
+            int status = currentPiece.MoveRight(myBoard);
+                
+            currentPiece.DisplayBoard(panelBoard);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            currentPiece.DisappearBoard(panelBoard);
+
+            int status = currentPiece.CheckRotateClockwise(myBoard);
+
+            currentPiece.DisplayBoard(panelBoard);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            currentPiece.DisappearBoard(panelBoard);
+
+            int status = currentPiece.CheckRotateCounterClockwise(myBoard);
+
+            currentPiece.DisplayBoard(panelBoard);
         }
     }
 }

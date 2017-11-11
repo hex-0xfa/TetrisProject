@@ -235,7 +235,21 @@ namespace TetrisProject
             }
             else
             {
-                //Need to reset the rotation code
+                switch(MyRotationSateClockwise)
+                {
+                    case RotationStateClockwise.CW0:
+                        MyRotationSateClockwise = RotationStateClockwise.CW90;
+                        break;
+                    case RotationStateClockwise.CW90:
+                        MyRotationSateClockwise = RotationStateClockwise.CW180;
+                        break;
+                    case RotationStateClockwise.CW180:
+                        MyRotationSateClockwise = RotationStateClockwise.CW270;
+                        break;
+                    case RotationStateClockwise.CW270:
+                        MyRotationSateClockwise = RotationStateClockwise.CW0;
+                        break;
+                }
                 //it can be rotated
                 PieceGrid = myPieceGrid;
                 return 0;
@@ -266,7 +280,21 @@ namespace TetrisProject
             else
             {
                 //it can be rotated
-                //need to reset the rotation code
+                switch (MyRotationSateClockwise)
+                {
+                    case RotationStateClockwise.CW0:
+                        MyRotationSateClockwise = RotationStateClockwise.CW270;
+                        break;
+                    case RotationStateClockwise.CW90:
+                        MyRotationSateClockwise = RotationStateClockwise.CW0;
+                        break;
+                    case RotationStateClockwise.CW180:
+                        MyRotationSateClockwise = RotationStateClockwise.CW90;
+                        break;
+                    case RotationStateClockwise.CW270:
+                        MyRotationSateClockwise = RotationStateClockwise.CW180;
+                        break;
+                }
                 PieceGrid = myPieceGrid;
                 return 0;
             }

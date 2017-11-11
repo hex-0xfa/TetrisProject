@@ -25,7 +25,10 @@ namespace TetrisProject
             {
                 for(int column = 1; column <= GameConstants.columnNumber; column++)
                 {
-                    BlockGraphics.DisplayBlock(BoardArray[row - 1, column - 1], myPanel, row, column);
+                    if (BoardArray[row - 1, column - 1] != 0)
+                    {
+                        BlockGraphics.DisplayBlock(BoardArray[row - 1, column - 1], myPanel, row, column);
+                    }
                 }
             }
         }
@@ -70,6 +73,7 @@ namespace TetrisProject
                     {
                         BoardArray[0, Trycolumn - 1] = 0;   //assign the top line to all zero
                     }
+                    row++;
                 }
             }
             return linesCleared;
@@ -77,6 +81,11 @@ namespace TetrisProject
 
         public bool IsPieceInHere(int row, int column)  //naybe used by pieces to check whether it can go somewhere
         {
+            if((row < 1) || (row > GameConstants.rowNumber) ||(column < 1) || (column > GameConstants.columnNumber))
+            {
+                return false;
+            }
+
             if(BoardArray[row - 1, column - 1] != 0)   //may reference out of bound
             {
                 return true;
