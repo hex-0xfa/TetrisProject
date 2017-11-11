@@ -15,19 +15,19 @@ namespace TetrisProject
 
         public Board(Panel newPanel)
         {
-            BoardArray = new int[GameConstants.rowNumber, GameConstants.columnNumber];  //all set to zero by default
+            BoardArray = new int[GameConstants.rowNumber + GameConstants.pieceGridSizeY, GameConstants.columnNumber];  //all set to zero by default
             myPanel = newPanel;
         }
 
         public void DisplayBoard()         //display the board as a whole
         {
-            for(int row = 1; row <= GameConstants.rowNumber; row++)
+            for(int row = GameConstants.pieceGridSizeY + 1; row <= GameConstants.rowNumber + GameConstants.pieceGridSizeY; row++)
             {
                 for(int column = 1; column <= GameConstants.columnNumber; column++)
                 {
                     if (BoardArray[row - 1, column - 1] != 0)
                     {
-                        BlockGraphics.DisplayBlock(BoardArray[row - 1, column - 1], myPanel, row, column);
+                        BlockGraphics.DisplayBlock(BoardArray[row - 1, column - 1], myPanel, row - GameConstants.pieceGridSizeY, column);
                     }
                 }
             }
@@ -35,11 +35,11 @@ namespace TetrisProject
 
         public static void ClearDisplayBoard(Panel newPanel)     //clear the board display to let new pieces be on it (should be used first because we need to display the piece as well
         {
-            for (int row = 1; row <= GameConstants.rowNumber; row++)
+            for (int row = GameConstants.pieceGridSizeY + 1; row <= GameConstants.rowNumber + GameConstants.pieceGridSizeY; row++)
             {
                 for (int column = 1; column <= GameConstants.columnNumber; column++)
                 {
-                    BlockGraphics.DisappearBlock(newPanel, row, column);
+                    BlockGraphics.DisappearBlock(newPanel, row - GameConstants.pieceGridSizeY, column);
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace TetrisProject
         {
             int linesCleared = 0;          //the total lines cleared
             bool clear = true;             // whetehr to clear the line
-            for(int row = GameConstants.rowNumber; row >= 1; row--)
+            for(int row = GameConstants.rowNumber + GameConstants.pieceGridSizeY; row >= 1; row--)
             {
                 clear = true;
                 for (int column = 1; column <= GameConstants.columnNumber; column++)
@@ -86,7 +86,7 @@ namespace TetrisProject
                 return false;
             }
 
-            if(BoardArray[row - 1, column - 1] != 0)   //may reference out of bound
+            if(BoardArray[row - 1 + GameConstants.pieceGridSizeY, column - 1] != 0)   //may reference out of bound
             {
                 return true;
             }
@@ -104,11 +104,27 @@ namespace TetrisProject
                 {
                     if(myPiece.getGrid(row , column ) == 1)
                     {
-                        BoardArray[myPiece.PieceRow + row - GameConstants.pieceGridSizeY - 1 - 1, myPiece.PieceColumn + column - GameConstants.pieceGridSizeX - 1] = myPiece.PieceCode;
+                        BoardArray[myPiece.PieceRow + row - 1 - 1, myPiece.PieceColumn + column - GameConstants.pieceGridSizeX - 1] = myPiece.PieceCode;
                     }
                    //don't add if the content is zero
                 }
             }
+        }
+
+        public bool CheckLoss()
+        {
+            bool youLoss = false;
+            for(int row = 1; row <= GameConstants.pieceGridSizeY; row++)
+            {
+                for(int column = 1; column <= GameConstants.columnNumber; column++)
+                {
+                    if(BoardArray[row-1,column-1] != 0)
+                    {
+                        youLoss = true;
+                    }
+                }
+            }
+            return youLoss;
         }
     }
 }

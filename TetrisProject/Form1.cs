@@ -12,6 +12,8 @@ namespace TetrisProject
 {
     public partial class TetrisFrom : Form
     {
+        private bool ResetAble;
+
         private Piece currentPiece;               //used to point to the current piece
 
         private Piece nextPiece;                  //used to point to the next piece
@@ -58,6 +60,8 @@ namespace TetrisProject
             currentPiece = Piece.GenerateRandomPieceOnTop();
 
             nextPiece = Piece.GenerateRandomPieceOnTop();
+
+            ResetAble = false;
 
         }
         private void TetrisFrom_Load(object sender, EventArgs e)
@@ -135,64 +139,103 @@ namespace TetrisProject
             nextPiece.DisplayNext(nextBlockPanel);
         }
 
+
+
         private void button1_Click(object sender, EventArgs e)
         {
-            currentPiece.DisappearBoard(panelBoard);
-
-            int status = currentPiece.Falling(myBoard);
-
-            if(status == 1)
+            if (!ResetAble)
             {
-                myBoard.AddPiece(currentPiece);
-                myBoard.CheckAndClearLines();
-                Board.ClearDisplayBoard(panelBoard);
-                myBoard.DisplayBoard();
-                currentPiece = nextPiece;
-                nextPiece = Piece.GenerateRandomPieceOnTop();
-                currentPiece.DisplayBoard(panelBoard);
-                Piece.DisappearNext(nextBlockPanel);
-                nextPiece.DisplayNext(nextBlockPanel);
-            }
-            else
-            {
-                currentPiece.DisplayBoard(panelBoard);
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.Falling(myBoard);
+
+                if (status == 1)
+                {
+                    myBoard.AddPiece(currentPiece);
+                    myBoard.CheckAndClearLines();
+                    Board.ClearDisplayBoard(panelBoard);
+                    myBoard.DisplayBoard();
+                    if (myBoard.CheckLoss())
+                    {
+                        test.Visible = true;
+                        ResetAble = true;
+                        return;
+                    }
+                    currentPiece = nextPiece;
+                    nextPiece = Piece.GenerateRandomPieceOnTop();
+                    currentPiece.DisplayBoard(panelBoard);
+                    Piece.DisappearNext(nextBlockPanel);
+                    nextPiece.DisplayNext(nextBlockPanel);
+                }
+                else
+                {
+                    currentPiece.DisplayBoard(panelBoard);
+                }
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            currentPiece.DisappearBoard(panelBoard);
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
 
-            int status = currentPiece.MoveLeft(myBoard);
+                int status = currentPiece.MoveLeft(myBoard);
 
-            currentPiece.DisplayBoard(panelBoard);
+                currentPiece.DisplayBoard(panelBoard);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            currentPiece.DisappearBoard(panelBoard);
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
 
-            int status = currentPiece.MoveRight(myBoard);
-                
-            currentPiece.DisplayBoard(panelBoard);
+                int status = currentPiece.MoveRight(myBoard);
+
+                currentPiece.DisplayBoard(panelBoard);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            currentPiece.DisappearBoard(panelBoard);
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
 
-            int status = currentPiece.CheckRotateClockwise(myBoard);
+                int status = currentPiece.CheckRotateClockwise(myBoard);
 
-            currentPiece.DisplayBoard(panelBoard);
+                currentPiece.DisplayBoard(panelBoard);
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            currentPiece.DisappearBoard(panelBoard);
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
 
-            int status = currentPiece.CheckRotateCounterClockwise(myBoard);
+                int status = currentPiece.CheckRotateCounterClockwise(myBoard);
 
-            currentPiece.DisplayBoard(panelBoard);
+                currentPiece.DisplayBoard(panelBoard);
+            }
+        }
+
+        private void test_Click(object sender, EventArgs e)
+        {
+            if(ResetAble)
+            {
+                myBoard = new Board(panelBoard);
+                Board.ClearDisplayBoard(panelBoard);
+                myBoard.DisplayBoard();
+                currentPiece = Piece.GenerateRandomPieceOnTop();
+                nextPiece = Piece.GenerateRandomPieceOnTop();
+                Piece.DisappearNext(nextBlockPanel);
+                nextPiece.DisplayNext(nextBlockPanel);
+                ResetAble = false;
+                test.Visible = false;
+            }
         }
     }
 }
