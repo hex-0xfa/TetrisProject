@@ -69,20 +69,20 @@
             this.helpToolStripMenuItem});
             this.tetrisMenu.Location = new System.Drawing.Point(0, 0);
             this.tetrisMenu.Name = "tetrisMenu";
-            this.tetrisMenu.Size = new System.Drawing.Size(682, 24);
+            this.tetrisMenu.Size = new System.Drawing.Size(682, 28);
             this.tetrisMenu.TabIndex = 2;
             this.tetrisMenu.Text = "menuStrip1";
             // 
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.gameToolStripMenuItem.Text = "Game";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // playPauseButton
@@ -257,7 +257,7 @@
             this.test.ForeColor = System.Drawing.Color.White;
             this.test.Location = new System.Drawing.Point(383, 593);
             this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(167, 13);
+            this.test.Size = new System.Drawing.Size(287, 15);
             this.test.TabIndex = 17;
             this.test.Text = "You have lost, click here to replay";
             this.test.Visible = false;

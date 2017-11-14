@@ -29,7 +29,7 @@ namespace TetrisProject
 
         private PlayStatus currentGameStatus;
 
-        private static int currentLevel = 1;        //The current level of this game
+        private int currentLevel;        //The current level of this game
 
         public TetrisFrom()
         {
@@ -62,6 +62,8 @@ namespace TetrisProject
             nextPiece = Piece.GenerateRandomPieceOnTop();
 
             ResetAble = false;
+
+            currentLevel = 1;
 
         }
         private void TetrisFrom_Load(object sender, EventArgs e)
@@ -157,15 +159,25 @@ namespace TetrisProject
                 if (status == 1)
                 {
                     myBoard.AddPiece(currentPiece);
-                    myBoard.CheckAndClearLines();
+                    int levelcleared = myBoard.CheckAndClearLines();
+                    //change the lines label
+                    //check the level calculate the points and add it to local variable score
+                    // change the score label
+                    //check whether advance to next level
+                    //increment the local variable curlevel
+                    //change the level label
+                    //change the speed of falling
+
                     Board.ClearDisplayBoard(panelBoard);
                     myBoard.DisplayBoard();
                     if (myBoard.CheckLoss())
                     {
+                        //add a way for user to store scores here
                         test.Visible = true;
                         ResetAble = true;
                         return;
                     }
+                    //check for 
                     currentPiece = nextPiece;
                     nextPiece = Piece.GenerateRandomPieceOnTop();
                     currentPiece.DisplayBoard(panelBoard);
@@ -251,7 +263,7 @@ namespace TetrisProject
                 case Keys.P:
                     Pause(this);
                     break;
-                case Keys.Down:
+                case Keys.Space:
                     SetSpeed(0, true);
                     break;
                 case Keys.Up:
@@ -349,7 +361,15 @@ namespace TetrisProject
 
         private void TetrisFrom_KeyUp(object sender, KeyEventArgs e)
         {
-            SetSpeed(currentLevel);
+            switch (e.KeyData)
+            {
+                case Keys.Space:
+                    SetSpeed(currentLevel);
+                    break;
+                    //add some code if necessary in future
+                default:
+                    break;
+            }
         }
     }
     
