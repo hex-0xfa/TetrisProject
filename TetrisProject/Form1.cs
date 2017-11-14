@@ -121,9 +121,14 @@ namespace TetrisProject
             currentGameStatus = PlayStatus.PlayNotPause;
             playPauseButton.Text = "Pause";
         }
-        private void SetSpeed(int Level)
+        private void SetSpeed(int Level,bool downKey = false)
         {
-            timer1.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)Level));
+            if (downKey)
+            {
+                timer1.Interval = 1;
+                return;
+            }
+            timer1.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)Level))/5;
         }
 
         private void panelBoard_Paint(object sender, PaintEventArgs e)   //hanlde the reprinting of the board panel
@@ -237,5 +242,116 @@ namespace TetrisProject
                 test.Visible = false;
             }
         }
+
+        private void TetrisFrom_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            switch (e.KeyData)
+            {
+                case Keys.P:
+                    Pause(this);
+                    break;
+                case Keys.Down:
+                    SetSpeed(0, true);
+                    break;
+                case Keys.Up:
+                    
+                    break;
+                case Keys.Left:
+                    if (!ResetAble)
+                    {
+                        currentPiece.DisappearBoard(panelBoard);
+
+                        int status = currentPiece.MoveLeft(myBoard);
+
+                        currentPiece.DisplayBoard(panelBoard);
+                    }
+                    break;
+                case Keys.Right:
+                    if (!ResetAble)
+                    {
+                        currentPiece.DisappearBoard(panelBoard);
+
+                        int status = currentPiece.MoveRight(myBoard);
+
+                        currentPiece.DisplayBoard(panelBoard);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+
+
+        private void MoveDown()
+        {
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.Falling(myBoard);
+
+                if (status == 1)
+                {
+                    myBoard.AddPiece(currentPiece);
+                    myBoard.CheckAndClearLines();
+                    Board.ClearDisplayBoard(panelBoard);
+                    myBoard.DisplayBoard();
+                    if (myBoard.CheckLoss())
+                    {
+                        test.Visible = true;
+                        ResetAble = true;
+                        return;
+                    }
+                    currentPiece = nextPiece;
+                    nextPiece = Piece.GenerateRandomPieceOnTop();
+                    currentPiece.DisplayBoard(panelBoard);
+                    Piece.DisappearNext(nextBlockPanel);
+                    nextPiece.DisplayNext(nextBlockPanel);
+                }
+                else
+                {
+                    currentPiece.DisplayBoard(panelBoard);
+                }
+            }
+        }
+
+        private void MoveLeft()
+        {
+            if (!ResetAble)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.MoveLeft(myBoard);
+
+                currentPiece.DisplayBoard(panelBoard);
+            }
+        }
+
+
+
+        private void Update()
+        {
+
+        }
+
+
+
+        int step = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            step = (step + 1) % 5;
+            Update();
+            if(step == 0)MoveDown();
+        }
+
+        private void TetrisFrom_KeyUp(object sender, KeyEventArgs e)
+        {
+            SetSpeed(currentLevel);
+        }
     }
+    
+
 }

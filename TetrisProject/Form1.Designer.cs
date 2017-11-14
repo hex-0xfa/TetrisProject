@@ -43,11 +43,11 @@
             this.levelNumber = new System.Windows.Forms.Label();
             this.linesNumber = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.downButton = new System.Windows.Forms.Button();
+            this.leftButton = new System.Windows.Forms.Button();
+            this.rightButton = new System.Windows.Forms.Button();
+            this.clockwizeButton = new System.Windows.Forms.Button();
+            this.counterClockButton = new System.Windows.Forms.Button();
             this.test = new System.Windows.Forms.Label();
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
@@ -69,20 +69,20 @@
             this.helpToolStripMenuItem});
             this.tetrisMenu.Location = new System.Drawing.Point(0, 0);
             this.tetrisMenu.Name = "tetrisMenu";
-            this.tetrisMenu.Size = new System.Drawing.Size(682, 28);
+            this.tetrisMenu.Size = new System.Drawing.Size(682, 24);
             this.tetrisMenu.TabIndex = 2;
             this.tetrisMenu.Text = "menuStrip1";
             // 
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "Game";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // playPauseButton
@@ -192,55 +192,64 @@
             this.linesNumber.Text = "0";
             this.linesNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // timer1
             // 
-            this.button1.Location = new System.Drawing.Point(399, 258);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "down";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button2
+            // downButton
             // 
-            this.button2.Location = new System.Drawing.Point(399, 323);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "left";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.downButton.Enabled = false;
+            this.downButton.Location = new System.Drawing.Point(399, 258);
+            this.downButton.Name = "downButton";
+            this.downButton.Size = new System.Drawing.Size(75, 23);
+            this.downButton.TabIndex = 12;
+            this.downButton.Text = "down";
+            this.downButton.UseVisualStyleBackColor = true;
+            this.downButton.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button3
+            // leftButton
             // 
-            this.button3.Location = new System.Drawing.Point(399, 392);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "right";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.leftButton.Enabled = false;
+            this.leftButton.Location = new System.Drawing.Point(399, 323);
+            this.leftButton.Name = "leftButton";
+            this.leftButton.Size = new System.Drawing.Size(75, 23);
+            this.leftButton.TabIndex = 13;
+            this.leftButton.Text = "left";
+            this.leftButton.UseVisualStyleBackColor = true;
+            this.leftButton.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button4
+            // rightButton
             // 
-            this.button4.Location = new System.Drawing.Point(399, 461);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "C";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.rightButton.Enabled = false;
+            this.rightButton.Location = new System.Drawing.Point(399, 392);
+            this.rightButton.Name = "rightButton";
+            this.rightButton.Size = new System.Drawing.Size(75, 23);
+            this.rightButton.TabIndex = 14;
+            this.rightButton.Text = "right";
+            this.rightButton.UseVisualStyleBackColor = true;
+            this.rightButton.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button5
+            // clockwizeButton
             // 
-            this.button5.Location = new System.Drawing.Point(399, 528);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "CC";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.clockwizeButton.Enabled = false;
+            this.clockwizeButton.Location = new System.Drawing.Point(399, 461);
+            this.clockwizeButton.Name = "clockwizeButton";
+            this.clockwizeButton.Size = new System.Drawing.Size(75, 23);
+            this.clockwizeButton.TabIndex = 15;
+            this.clockwizeButton.Text = "C";
+            this.clockwizeButton.UseVisualStyleBackColor = true;
+            this.clockwizeButton.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // counterClockButton
+            // 
+            this.counterClockButton.Enabled = false;
+            this.counterClockButton.Location = new System.Drawing.Point(399, 528);
+            this.counterClockButton.Name = "counterClockButton";
+            this.counterClockButton.Size = new System.Drawing.Size(75, 23);
+            this.counterClockButton.TabIndex = 16;
+            this.counterClockButton.Text = "CC";
+            this.counterClockButton.UseVisualStyleBackColor = true;
+            this.counterClockButton.Click += new System.EventHandler(this.button5_Click);
             // 
             // test
             // 
@@ -248,7 +257,7 @@
             this.test.ForeColor = System.Drawing.Color.White;
             this.test.Location = new System.Drawing.Point(383, 593);
             this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(287, 15);
+            this.test.Size = new System.Drawing.Size(167, 13);
             this.test.TabIndex = 17;
             this.test.Text = "You have lost, click here to replay";
             this.test.Visible = false;
@@ -260,11 +269,11 @@
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(682, 700);
             this.Controls.Add(this.test);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.counterClockButton);
+            this.Controls.Add(this.clockwizeButton);
+            this.Controls.Add(this.rightButton);
+            this.Controls.Add(this.leftButton);
+            this.Controls.Add(this.downButton);
             this.Controls.Add(this.linesNumber);
             this.Controls.Add(this.levelNumber);
             this.Controls.Add(this.socreNumber);
@@ -284,6 +293,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
             this.Load += new System.EventHandler(this.TetrisFrom_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TetrisFrom_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TetrisFrom_KeyUp);
             this.tetrisMenu.ResumeLayout(false);
             this.tetrisMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -306,11 +317,11 @@
         private System.Windows.Forms.Label levelNumber;
         private System.Windows.Forms.Label linesNumber;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button downButton;
+        private System.Windows.Forms.Button leftButton;
+        private System.Windows.Forms.Button rightButton;
+        private System.Windows.Forms.Button clockwizeButton;
+        private System.Windows.Forms.Button counterClockButton;
         private System.Windows.Forms.Label test;
     }
 }
