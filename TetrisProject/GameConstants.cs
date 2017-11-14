@@ -8,6 +8,9 @@ namespace TetrisProject
 {
     static class GameConstants
     {
+
+        //Defined by Chenxi Chu
+
         public const int rowNumber = 18;          //The number of rows for the game
 
         public const int columnNumber = 10;       //The number of columns for the game
@@ -72,6 +75,10 @@ namespace TetrisProject
         public static int validPiecePositionX = pieceGridSizeX - 1 + columnNumber;
 
         public static int validPiecePostionY = pieceGridSizeY + rowNumber;
+
+        //Defined by Omar Ahmed
+
+
 
     }
 }
