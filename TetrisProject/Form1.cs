@@ -267,7 +267,24 @@ namespace TetrisProject
                     SetSpeed(0, true);
                     break;
                 case Keys.Up:
-                    
+                    if (!ResetAble)
+                    {
+                        currentPiece.DisappearBoard(panelBoard);
+
+                        int status = currentPiece.CheckRotateClockwise(myBoard);
+
+                        currentPiece.DisplayBoard(panelBoard);
+                    }
+                    break;
+                case Keys.Down:
+                    if (!ResetAble)
+                    {
+                        currentPiece.DisappearBoard(panelBoard);
+
+                        int status = currentPiece.CheckRotateClockwise(myBoard);
+
+                        currentPiece.DisplayBoard(panelBoard);
+                    }
                     break;
                 case Keys.Left:
                     if (!ResetAble)
