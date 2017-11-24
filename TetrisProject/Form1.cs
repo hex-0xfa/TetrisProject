@@ -13,11 +13,9 @@ namespace TetrisProject
 {
     public partial class TetrisForm : Form
     {
-        DateTime startTime;                      //used to pause the timer
+        DateTime startTime;                       //used to pause the timer              
 
-        bool speedIncreased;
-
-        int restTime;                            //used to pasue the timer
+        int elapsedTime;                             //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
 
@@ -25,9 +23,19 @@ namespace TetrisProject
 
         private Board myBoard;                    //used to do the calculations and provide abstaction with the board class
 
-        private int currentFallingSpeed;          //keep the current falling
+        private int currentFallingSpeed;          //keep the current normal falling speed
 
         private int increasedSpeed;               //The speed after increase
+
+        private bool upKeyPressed;
+
+        private bool downKeyPressed;
+
+        private bool leftKeyPressed;
+
+        private bool rightKeyPressed;
+
+        private bool spaceKeyPressed;
 
         private enum PlayStatus          //The Status of the current game
         {
@@ -43,6 +51,14 @@ namespace TetrisProject
         private int linesCleared;        //The lines cleared
 
         private int scores;              //The scores earned
+
+        private int upKeyPressedNumber;
+
+        private int downKeyPressedNumber;
+
+        private int leftKeyPressedNumber;
+
+        private int rightKeyPressedNumber;
 
         public TetrisForm()              //constructor
         {
@@ -84,7 +100,7 @@ namespace TetrisProject
 
             test.Visible = false;
 
-            speedIncreased = false;
+            ClearAllKeys();
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -110,7 +126,7 @@ namespace TetrisProject
                 currentGameStatus = PlayStatus.Inactive;
                 playPauseButton.Text = "Play";
                 TheTimer.Enabled = false;
-                speedIncreased = false;
+                ClearAllKeys();
             }
             else if(myPlayStatus == PlayStatus.Game)
             {
@@ -118,13 +134,13 @@ namespace TetrisProject
                 playPauseButton.Text = "Pause";
                 TheTimer.Enabled = true;
                 startTime = DateTime.Now;
-                speedIncreased = false;
             }
             else
             {
                 currentGameStatus = PlayStatus.Pause;
                 playPauseButton.Text = "Resume";
                 TheTimer.Enabled = false;
+                ClearAllKeys();
             }
         }
 
@@ -139,10 +155,16 @@ namespace TetrisProject
             {
                 ChangeGameStatus(PlayStatus.Inactive);
             }
+
+            //could redisplay the panel
         }
 
         public void StartNewGame()  //Inactive Game Pause
         {
+            test.Visible = false;
+            ResetScore();
+            ResetLines();
+            RestartLevel();
             Board.ClearDisplayBoard(panelBoard);
             myBoard = new Board(panelBoard);
             myBoard.DisplayBoard();
@@ -151,10 +173,6 @@ namespace TetrisProject
             nextPiece = Piece.GenerateRandomPieceOnTop();
             Piece.DisappearNext(nextBlockPanel);
             nextPiece.DisplayNext(nextBlockPanel);
-            test.Visible = false;
-            ResetScore();
-            ResetLines();
-            RestartLevel();
             currentFallingSpeed = (int)GameConstants.baseInterval;
             increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
             TheTimer.Interval = currentFallingSpeed;
@@ -175,7 +193,7 @@ namespace TetrisProject
         {
             if (currentGameStatus == PlayStatus.Game)
             {
-                restTime = (DateTime.Now.Subtract(startTime)).Milliseconds;
+                elapsedTime = (DateTime.Now.Subtract(startTime)).Milliseconds;
                 ChangeGameStatus(PlayStatus.Pause);
             }
         }
@@ -184,12 +202,12 @@ namespace TetrisProject
         {
             if (currentGameStatus == PlayStatus.Pause)
             {
-                TheTimer.Interval = TheTimer.Interval - restTime;
+                TheTimer.Interval = TheTimer.Interval - elapsedTime;
                 ChangeGameStatus(PlayStatus.Game);
             }
         }
 
-        public void LoadGame()     //Inactive
+        public void LoadGame()     //Inactive Pause
         {
 
         }
@@ -203,7 +221,7 @@ namespace TetrisProject
         {
             if ((lines < 1) || (lines > GameConstants.pieceGridSizeY))
             {
-                return;
+                return;   //not correct line number
             }
             AddScores(lines);
             AddLines(lines);
@@ -276,8 +294,6 @@ namespace TetrisProject
             levelNumber.Text = currentLevel.ToString();
         }
 
-
-
         //display related functions
 
         private void label1_MouseHover(object sender, EventArgs e)
@@ -315,7 +331,7 @@ namespace TetrisProject
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(speedIncreased == true)
+            if(spaceKeyPressed == true)
             {
                 TheTimer.Interval = increasedSpeed;
             }
@@ -323,10 +339,12 @@ namespace TetrisProject
             {
                 TheTimer.Interval = currentFallingSpeed;
             }
-            restTime = 0;
+            elapsedTime = 0;
             startTime = DateTime.Now;
             Falling();
         }
+
+        //could add different audio effect for successful or unsuccessful move
 
         private void MoveLeft()
         {
@@ -406,6 +424,7 @@ namespace TetrisProject
                     {
                         LostGame();
                     }
+                    ClearAllKeys();
                     currentPiece = nextPiece;
                     nextPiece = Piece.GenerateRandomPieceOnTop();
                     currentPiece.DisplayBoard(panelBoard);
@@ -422,25 +441,59 @@ namespace TetrisProject
 
         private void tetrisMenu_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Left)
             {
-                MoveLeft();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    if (leftKeyPressed == false)
+                    {
+                        MoveLeft();
+                        TurnOnLeftKey();
+                    }
+                }
             }
             else if(e.KeyCode == Keys.Right)
             {
-                MoveRight();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    if (rightKeyPressed == false)
+                    {
+                        MoveRight();
+                        TurnOnRightKey();
+                    }
+                }
             }
             else if(e.KeyCode == Keys.Up)
             {
-                ClockwiseRotating();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    if (upKeyPressed == false)
+                    {
+                        ClockwiseRotating();
+                        TurnOnUpKey();
+                    }
+                }
             }
             else if(e.KeyCode == Keys.Down)
             {
-                CounterClockwiseRotating();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    if (downKeyPressed == false)
+                    {
+                        CounterClockwiseRotating();
+                        TurnOnDownKey();
+                    }
+                }
             }
             else if (e.KeyCode == Keys.Space)
             {
-                IncreaseSpeed();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    if (spaceKeyPressed == false)
+                    {
+                        IncreaseSpeed();
+                    }
+                }
             }
             else if(e.KeyCode == Keys.Home)
             {
@@ -461,24 +514,96 @@ namespace TetrisProject
 
         private void tetrisMenu_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Left)
             {
-                DecreaseSpeed();
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    TurnOffLeftKey();
+                }
             }
+            else if (e.KeyCode == Keys.Right)
+            {
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    TurnOffRightKey();
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    TurnOffUpKey();
+                }
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    TurnOffDownKey();
+                }
+            }
+            else if (e.KeyCode == Keys.Space)
+            {
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    DecreaseSpeed();
+                }
+            }
+        }
+
+        private void ClearAllKeys()
+        {
+            TurnOffLeftKey();
+            TurnOffRightKey();
+            TurnOffUpKey();
+            TurnOffDownKey();
+            DecreaseSpeed();
+        }
+
+        private void TurnOnLeftKey()
+        {
+            leftKeyPressed = true;
+            LeftKeyTimer.Interval = GetKeyRefreshRate();
+            LeftKeyTimer.Enabled = true;
+        }
+
+        private void TurnOnRightKey()
+        {
+            rightKeyPressed = true;
+            RightKeyTimer.Interval = GetKeyRefreshRate();
+            RightKeyTimer.Enabled = true;
+
+        }
+
+        private void TurnOnUpKey()
+        {
+            upKeyPressed = true;
+            UpKeyTimer.Interval = GetKeyRefreshRate();
+            UpKeyTimer.Enabled = true;
+        }
+
+        private void TurnOnDownKey()
+        {
+            downKeyPressed = true;
+            DownKeyTimer.Interval = GetKeyRefreshRate();
+            DownKeyTimer.Enabled = true;
         }
 
         private void IncreaseSpeed()
         {
-            if(currentGameStatus == PlayStatus.Game)
+            spaceKeyPressed = true;
+
+            if (currentGameStatus == PlayStatus.Game)
             {
-                if(TheTimer.Interval > GameConstants.maximumFastFallingSpeed)
+                if (TheTimer.Interval > GameConstants.maximumFastFallingSpeed)
                 {
                     TheTimer.Interval = (int)GameConstants.maximumFastFallingSpeed;
-                    speedIncreased = true;
+
+                    increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
                 }
                 else
                 {
-                    if(currentFallingSpeed > GameConstants.maximumFastFallingSpeed)
+                    if (currentFallingSpeed > GameConstants.maximumFastFallingSpeed)
                     {
                         increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
                     }
@@ -486,19 +611,134 @@ namespace TetrisProject
                     {
                         increasedSpeed = currentFallingSpeed;
                     }
-                    speedIncreased = true;
                 }
             }
-            
+        }
+
+        private void TurnOffLeftKey()
+        {
+            leftKeyPressed = false;
+            LeftKeyTimer.Enabled = false;
+            leftKeyPressedNumber = 0;
+        }
+
+        private void TurnOffRightKey()
+        {
+            rightKeyPressed = false;
+            RightKeyTimer.Enabled = false;
+            rightKeyPressedNumber = 0;
+        }
+
+        private void TurnOffUpKey()
+        {
+            upKeyPressed = false;
+            UpKeyTimer.Enabled = false;
+            upKeyPressedNumber = 0;
+        }
+
+        private void TurnOffDownKey()
+        {
+            downKeyPressed = false;
+            DownKeyTimer.Enabled = false;
+            downKeyPressedNumber = 0;
         }
 
         private void DecreaseSpeed()
         {
-            if (currentGameStatus == PlayStatus.Game)
+            spaceKeyPressed = false;
+        }
+
+        private int GetKeyRefreshRate()
+        {
+            if (currentFallingSpeed > (GameConstants.baseKeyRefreshRate * GameConstants.MinOperationPerFalling))
             {
-                speedIncreased = false;
+                return GameConstants.baseKeyRefreshRate;
             }
-            
+            else
+            {
+                return (currentFallingSpeed / GameConstants.MinOperationPerFalling);
+            }
+        }
+
+        private void UpKeyTimer_Tick(object sender, EventArgs e)
+        {
+            if(upKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            {
+            }
+            else
+            {
+                ClockwiseRotating();
+            }
+            upKeyPressedNumber++;
+        }
+
+        private void DownKeyTimer_Tick(object sender, EventArgs e)
+        {
+            if(downKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            {                
+            }
+            else
+            {
+                CounterClockwiseRotating();
+            }
+            downKeyPressedNumber++;
+        }
+
+        private void LeftKeyTimer_Tick(object sender, EventArgs e)
+        {
+            if(leftKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            {
+            }
+            else
+            {
+                MoveLeft();
+            }
+            leftKeyPressedNumber++;
+        }
+
+        private void RightKeyTimer_Tick(object sender, EventArgs e)
+        {
+            if (rightKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            {
+            }
+            else
+            {
+                MoveRight();
+            }
+            rightKeyPressedNumber++;
+        }
+
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+            MessageBox.Show("press up key for clockwise rotation\n" +
+                            "press down key for counterclockwise rotation\n" +
+                            "press left key for moving left\n" +
+                            "press right key for mving right\n" +
+                            "press space for speed up falling\n" +
+                            "press play button to start or restart play\n" +
+                            "press pause button to pause game\n" +
+                            "press resume button to resume game\n" +
+                            "按上箭头顺时针旋转\n" +
+                            "按下箭头逆时针旋转\n" +
+                            "按左箭头向左移动\n" +
+                            "按右箭头向右移动\n" +
+                            "按空格键加速下降\n" +
+                            "按play按钮开始或重新开始游戏\n" +
+                            "按pasue按钮暂停游戏\n" +
+                            "按resume按钮继续游戏\n");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+            MessageBox.Show("Tetirs for C# windows form\n" +
+                            "俄罗斯方块\n\n" +
+                            "developed by Henry Chu\n" +
+                            "由 Henry Chu 开发\n\n" +
+                            "email : chuchenxi_1997@163.com"
+                            );
+
         }
     }
 }

@@ -44,6 +44,12 @@
             this.linesNumber = new System.Windows.Forms.Label();
             this.test = new System.Windows.Forms.Label();
             this.TheTimer = new System.Windows.Forms.Timer(this.components);
+            this.UpKeyTimer = new System.Windows.Forms.Timer(this.components);
+            this.DownKeyTimer = new System.Windows.Forms.Timer(this.components);
+            this.LeftKeyTimer = new System.Windows.Forms.Timer(this.components);
+            this.RightKeyTimer = new System.Windows.Forms.Timer(this.components);
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,11 +79,15 @@
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.gameToolStripMenuItem.Text = "Game";
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem1,
+            this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.helpToolStripMenuItem.Text = "Help";
@@ -204,6 +214,36 @@
             // 
             this.TheTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // UpKeyTimer
+            // 
+            this.UpKeyTimer.Tick += new System.EventHandler(this.UpKeyTimer_Tick);
+            // 
+            // DownKeyTimer
+            // 
+            this.DownKeyTimer.Tick += new System.EventHandler(this.DownKeyTimer_Tick);
+            // 
+            // LeftKeyTimer
+            // 
+            this.LeftKeyTimer.Tick += new System.EventHandler(this.LeftKeyTimer_Tick);
+            // 
+            // RightKeyTimer
+            // 
+            this.RightKeyTimer.Tick += new System.EventHandler(this.RightKeyTimer_Tick);
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // TetrisForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -253,6 +293,12 @@
         private System.Windows.Forms.Label linesNumber;
         private System.Windows.Forms.Label test;
         private System.Windows.Forms.Timer TheTimer;
+        private System.Windows.Forms.Timer UpKeyTimer;
+        private System.Windows.Forms.Timer DownKeyTimer;
+        private System.Windows.Forms.Timer LeftKeyTimer;
+        private System.Windows.Forms.Timer RightKeyTimer;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

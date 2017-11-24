@@ -89,9 +89,10 @@ namespace TetrisProject
 
         public static int validPiecePostionY = pieceGridSizeY + rowNumber;
 
-        //Defined by Omar Ahmed
+        public const int baseKeyRefreshRate = 50;
 
+        public const int MinOperationPerFalling = 5;
 
-
+        public const int keyHoldTimeMultiplier = 2;
     }
 }
