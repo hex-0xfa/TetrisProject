@@ -15,6 +15,8 @@ namespace TetrisProject
     {
         DateTime startTime;                      //used to pause the timer
 
+        bool speedIncreased;
+
         int restTime;                            //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
@@ -22,6 +24,10 @@ namespace TetrisProject
         private Piece nextPiece;                  //used to point to the next piece
 
         private Board myBoard;                    //used to do the calculations and provide abstaction with the board class
+
+        private int currentFallingSpeed;          //keep the current falling
+
+        private int increasedSpeed;               //The speed after increase
 
         private enum PlayStatus          //The Status of the current game
         {
@@ -38,7 +44,7 @@ namespace TetrisProject
 
         private int scores;              //The scores earned
 
-        public TetrisForm()            //constructor
+        public TetrisForm()              //constructor
         {
             InitializeComponent();
 
@@ -78,7 +84,7 @@ namespace TetrisProject
 
             test.Visible = false;
 
-            this.Focus();
+            speedIncreased = false;
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -104,6 +110,7 @@ namespace TetrisProject
                 currentGameStatus = PlayStatus.Inactive;
                 playPauseButton.Text = "Play";
                 TheTimer.Enabled = false;
+                speedIncreased = false;
             }
             else if(myPlayStatus == PlayStatus.Game)
             {
@@ -111,6 +118,7 @@ namespace TetrisProject
                 playPauseButton.Text = "Pause";
                 TheTimer.Enabled = true;
                 startTime = DateTime.Now;
+                speedIncreased = false;
             }
             else
             {
@@ -118,31 +126,6 @@ namespace TetrisProject
                 playPauseButton.Text = "Resume";
                 TheTimer.Enabled = false;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Falling();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MoveLeft();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            MoveRight();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            ClockwiseRotating();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            CounterClockwiseRotating();
         }
 
         public void QuitProgram()  //All three
@@ -172,7 +155,9 @@ namespace TetrisProject
             ResetScore();
             ResetLines();
             RestartLevel();
-            TheTimer.Interval = (int) GameConstants.baseInterval;
+            currentFallingSpeed = (int)GameConstants.baseInterval;
+            increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
+            TheTimer.Interval = currentFallingSpeed;
             ChangeGameStatus(PlayStatus.Game);
         }
 
@@ -218,7 +203,7 @@ namespace TetrisProject
         {
             if ((lines < 1) || (lines > GameConstants.pieceGridSizeY))
             {
-                return;   //may add way to handle the mistake
+                return;
             }
             AddScores(lines);
             AddLines(lines);
@@ -236,8 +221,12 @@ namespace TetrisProject
 
         private void AdvanceLevel()
         {
-            currentLevel = currentLevel + 1;
-            UpdateDisplayLevel();
+            if ((currentGameStatus == PlayStatus.Game) || (currentGameStatus == PlayStatus.Pause))
+            {
+                currentLevel = currentLevel + 1;
+                UpdateDisplayLevel();
+                currentFallingSpeed = (int)(currentFallingSpeed * GameConstants.speedIncrease);
+            }
         }
 
         private void AddLines(int lines)
@@ -326,7 +315,14 @@ namespace TetrisProject
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            TheTimer.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)(currentLevel - 1)));
+            if(speedIncreased == true)
+            {
+                TheTimer.Interval = increasedSpeed;
+            }
+            else
+            {
+                TheTimer.Interval = currentFallingSpeed;
+            }
             restTime = 0;
             startTime = DateTime.Now;
             Falling();
@@ -446,6 +442,10 @@ namespace TetrisProject
             {
                 IncreaseSpeed();
             }
+            else if(e.KeyCode == Keys.Home)
+            {
+                AdvanceLevel();
+            }
             else if(e.Control == true)
             {
                 if(e.KeyCode == Keys.P)
@@ -471,16 +471,34 @@ namespace TetrisProject
         {
             if(currentGameStatus == PlayStatus.Game)
             {
-                TheTimer.Interval = TheTimer.Interval / GameConstants.speedUp;
+                if(TheTimer.Interval > GameConstants.maximumFastFallingSpeed)
+                {
+                    TheTimer.Interval = (int)GameConstants.maximumFastFallingSpeed;
+                    speedIncreased = true;
+                }
+                else
+                {
+                    if(currentFallingSpeed > GameConstants.maximumFastFallingSpeed)
+                    {
+                        increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
+                    }
+                    else
+                    {
+                        increasedSpeed = currentFallingSpeed;
+                    }
+                    speedIncreased = true;
+                }
             }
+            
         }
 
         private void DecreaseSpeed()
         {
             if (currentGameStatus == PlayStatus.Game)
             {
-                TheTimer.Interval = TheTimer.Interval * GameConstants.speedUp;
+                speedIncreased = false;
             }
+            
         }
     }
 }

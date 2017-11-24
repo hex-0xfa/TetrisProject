@@ -18,6 +18,8 @@ namespace TetrisProject
 
         public const double baseInterval = 500.00;  //The base interval of falling in ms
 
+        public const double maximumFastFallingSpeed = 50.00;  //the maximum fast falling speed
+
         public const int basePointsForRow = 100;  //The basis point earned for one row cleared
 
         //equation for calculating points: currentLevel * ( basePointsForRow * rowCleared + bonusPointsForExtraRow * ( rowCleared - 1 )
@@ -86,8 +88,6 @@ namespace TetrisProject
         public static int validPiecePositionX = pieceGridSizeX - 1 + columnNumber;
 
         public static int validPiecePostionY = pieceGridSizeY + rowNumber;
-
-        public static int speedUp = 10;
 
         //Defined by Omar Ahmed
 

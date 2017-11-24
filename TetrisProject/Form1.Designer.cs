@@ -42,11 +42,6 @@
             this.socreNumber = new System.Windows.Forms.Label();
             this.levelNumber = new System.Windows.Forms.Label();
             this.linesNumber = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.test = new System.Windows.Forms.Label();
             this.TheTimer = new System.Windows.Forms.Timer(this.components);
             this.tetrisMenu.SuspendLayout();
@@ -194,56 +189,6 @@
             this.linesNumber.Text = "0";
             this.linesNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(399, 258);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "down";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(399, 323);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "left";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(399, 392);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "right";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(399, 461);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "C";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(399, 528);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "CC";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // test
             // 
             this.test.AutoSize = true;
@@ -264,12 +209,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(682, 700);
+            this.Controls.Add(this.tetrisMenu);
             this.Controls.Add(this.test);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.linesNumber);
             this.Controls.Add(this.levelNumber);
             this.Controls.Add(this.socreNumber);
@@ -279,7 +220,6 @@
             this.Controls.Add(this.nextBlockLabel);
             this.Controls.Add(this.nextBlockPanel);
             this.Controls.Add(this.playPauseButton);
-            this.Controls.Add(this.tetrisMenu);
             this.Controls.Add(this.panelBoard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.tetrisMenu;
@@ -288,6 +228,8 @@
             this.Name = "TetrisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyUp);
             this.tetrisMenu.ResumeLayout(false);
             this.tetrisMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -309,11 +251,6 @@
         private System.Windows.Forms.Label socreNumber;
         private System.Windows.Forms.Label levelNumber;
         private System.Windows.Forms.Label linesNumber;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label test;
         private System.Windows.Forms.Timer TheTimer;
     }
