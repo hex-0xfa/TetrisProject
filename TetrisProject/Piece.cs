@@ -27,7 +27,7 @@ namespace TetrisProject
 
         private int piececode = 0;                     //to hold which piece the block is for calculation and diaplay purpose
 
-        public int PieceCode
+        public int PieceCode                           //The Piece code Property
         {
             get
             {
@@ -154,7 +154,7 @@ namespace TetrisProject
 
         public int MoveLeft(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, -1);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, -1, false);
 
             if (statusCode == 1)
             {
@@ -171,7 +171,7 @@ namespace TetrisProject
 
         public int MoveRight(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, 1);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, 1, false);
 
             if (statusCode == 1)
             {
@@ -226,7 +226,7 @@ namespace TetrisProject
 
             myPieceGrid = Piece.RotateClockwise(myPieceGrid);
 
-            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0);
+            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0, true);
 
             if (statusCode == 1)
             {
@@ -270,7 +270,7 @@ namespace TetrisProject
 
             myPieceGrid = Piece.RotateCounterclockwise(myPieceGrid);
 
-            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0);
+            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0, true);
 
             if(statusCode == 1)
             {
@@ -300,7 +300,7 @@ namespace TetrisProject
             }
         }
 
-        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn)
+        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn, bool IsRotation)
         {
             for (int row = 0; row < GameConstants.pieceGridSizeY; row++)
             {
@@ -323,7 +323,7 @@ namespace TetrisProject
 
         public int Falling(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 1, 0);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 1, 0, false);
 
             if (statusCode == 1)
             {

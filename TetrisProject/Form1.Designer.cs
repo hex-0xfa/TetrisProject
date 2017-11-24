@@ -1,6 +1,6 @@
 ﻿namespace TetrisProject
 {
-    partial class TetrisFrom
+    partial class TetrisForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panelBoard = new System.Windows.Forms.Panel();
             this.tetrisMenu = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +41,6 @@
             this.socreNumber = new System.Windows.Forms.Label();
             this.levelNumber = new System.Windows.Forms.Label();
             this.linesNumber = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -252,9 +250,8 @@
             this.test.TabIndex = 17;
             this.test.Text = "You have lost, click here to replay";
             this.test.Visible = false;
-            this.test.Click += new System.EventHandler(this.test_Click);
             // 
-            // TetrisFrom
+            // TetrisForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
@@ -280,10 +277,9 @@
             this.MainMenuStrip = this.tetrisMenu;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
-            this.Name = "TetrisFrom";
+            this.Name = "TetrisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
-            this.Load += new System.EventHandler(this.TetrisFrom_Load);
             this.tetrisMenu.ResumeLayout(false);
             this.tetrisMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -305,7 +301,6 @@
         private System.Windows.Forms.Label socreNumber;
         private System.Windows.Forms.Label levelNumber;
         private System.Windows.Forms.Label linesNumber;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;

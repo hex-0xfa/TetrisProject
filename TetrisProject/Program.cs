@@ -16,7 +16,7 @@ namespace TetrisProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TetrisFrom());
+            Application.Run(new TetrisForm());
         }
     }
 }

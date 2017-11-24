@@ -21,7 +21,7 @@ namespace TetrisProject
 
         public const int blockSizeY = 35;                 //The vertical size of the block
 
-        public const int blockMargin = 2;                 //The size of the margin
+        public const int blockMargin = 1;                 //The size of the margin
 
         public static int boardSizeX = GameConstants.columnNumber * blockSizeX;  //The X size of the board
 

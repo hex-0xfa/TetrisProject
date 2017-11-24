@@ -9,15 +9,15 @@ namespace TetrisProject
 {
     class Board
     {
-        private int[,] BoardArray;
+        private int[,] BoardArray;       //The 2-dimensional array for the state of the board
 
-        private Panel myPanel;
+        private Panel myPanel;           //the panel for the board
 
         public Board(Panel newPanel)
         {
             BoardArray = new int[GameConstants.rowNumber + GameConstants.pieceGridSizeY, GameConstants.columnNumber];  //all set to zero by default
             myPanel = newPanel;
-        }
+        }   //constructor
 
         public void DisplayBoard()         //display the board as a whole
         {
@@ -56,6 +56,7 @@ namespace TetrisProject
                     if (BoardArray[row - 1, column - 1] == 0)
                     {
                         clear = false;
+                        break;
                     }
                 }
 
@@ -79,7 +80,7 @@ namespace TetrisProject
             return linesCleared;
         }
 
-        public bool IsPieceInHere(int row, int column)  //naybe used by pieces to check whether it can go somewhere
+        public bool IsPieceInHere(int row, int column)  //naybe used by pieces to check whether it can go somewhere, may reference outside of the bound
         {
             if((row < 1) || (row > GameConstants.rowNumber) ||(column < 1) || (column > GameConstants.columnNumber))
             {
@@ -96,7 +97,7 @@ namespace TetrisProject
             }
         }
 
-        public void AddPiece(Piece myPiece)   //probably need to intergrate the check and clear
+        public void AddPiece(Piece myPiece)   //add the piece to the board
         {
             for (int row = 1; row <= GameConstants.pieceGridSizeY; row++)
             {
@@ -111,7 +112,7 @@ namespace TetrisProject
             }
         }
 
-        public bool CheckLoss()
+        public bool CheckLoss()   //check whether the player lost this game
         {
             bool youLoss = false;
             for(int row = 1; row <= GameConstants.pieceGridSizeY; row++)

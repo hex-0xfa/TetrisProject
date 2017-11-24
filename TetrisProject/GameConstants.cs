@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TetrisProject
 {
@@ -23,11 +24,21 @@ namespace TetrisProject
 
         public const int bonusPointsForExtraRow = 50;  //Bonus Points for extra row cleared
 
+        public static int ModifiedBasePoints(int lines)  //The modified base points baesd on lines cleared
+        {
+            if((lines < 1) || (lines > pieceGridSizeY))
+            {
+                return 0;
+            }
+            else
+            {
+                return basePointsForRow * lines + bonusPointsForExtraRow * (lines - 1);
+            }
+        }
+
         public const int nextLevelLines = 10;   //The Lines needed to be cleared to enter the next level
 
         public const double speedIncrease = 0.8;  //The increase of falling speed of the block for each level advanced
-
-        //falling speed = baseInterval * speedIncrease ^ (currentLevel - 1)
 
         public const int pieceGridSizeX = 4;    //The size of piece grid X
 

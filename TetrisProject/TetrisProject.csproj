@@ -47,13 +47,16 @@
   <ItemGroup>
     <Compile Include="BlockGraphics.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="FileSaveLoad.cs" />
     <Compile Include="GameConstants.cs" />
+    <Compile Include="InputHandler.cs" />
     <Compile Include="LeftLPiece.cs" />
     <Compile Include="LeftSPiece.cs" />
     <Compile Include="LongPiece.cs" />
     <Compile Include="RightLPiece.cs" />
     <Compile Include="RIghtSPiece.cs" />
     <Compile Include="SquarePiece.cs" />
+    <Compile Include="TetrisTimer.cs" />
     <Compile Include="TPiece.cs" />
     <Compile Include="VisualConstants.cs" />
     <Compile Include="Form1.cs">

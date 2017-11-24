@@ -75,10 +75,10 @@ namespace TetrisProject
                 //the block is displayed in positon which it can't be, could implement a way to notify the user.
             }
             Graphics myBlock = DisplayPanel.CreateGraphics();
-            Rectangle marginBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX, (row - 1) * VisualConstants.blockSizeY, VisualConstants.blockSizeX, VisualConstants.blockSizeY);
+            Rectangle marginBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX - VisualConstants.blockMargin, (row - 1) * VisualConstants.blockSizeY - VisualConstants.blockMargin, VisualConstants.blockSizeX + 2 * VisualConstants.blockMargin, VisualConstants.blockSizeY + 2 * VisualConstants.blockMargin);
             SolidBrush myBrushMar = new SolidBrush(VisualConstants.marginColor);
             myBlock.FillRectangle(myBrushMar, marginBlock);                //dispaly a big margin color block
-            Rectangle innerBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX + VisualConstants.blockMargin, (row - 1) * VisualConstants.blockSizeY + VisualConstants.blockMargin, VisualConstants.blockSizeX - 2* VisualConstants.blockMargin, VisualConstants.blockSizeY - 2* VisualConstants.blockMargin);
+            Rectangle innerBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX + VisualConstants.blockMargin, (row - 1) * VisualConstants.blockSizeY + VisualConstants.blockMargin, VisualConstants.blockSizeX - 2 * VisualConstants.blockMargin, VisualConstants.blockSizeY - 2* VisualConstants.blockMargin);
             SolidBrush myBrushCol = new SolidBrush(blockColor);
             myBlock.FillRectangle(myBrushCol, innerBlock);                 //display a smaller true color block
         }
@@ -115,7 +115,7 @@ namespace TetrisProject
                 //the block is displayed in panels which it can't be, could implement a way to notify the user.
             }
             Graphics myBlock = DisplayPanel.CreateGraphics();
-            Rectangle OverrideBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX, (row - 1) * VisualConstants.blockSizeY, VisualConstants.blockSizeX, VisualConstants.blockSizeY);
+            Rectangle OverrideBlock = new Rectangle((column - 1) * VisualConstants.blockSizeX - VisualConstants.blockMargin, (row - 1) * VisualConstants.blockSizeY - VisualConstants.blockMargin, VisualConstants.blockSizeX + 2 * VisualConstants.blockMargin, VisualConstants.blockSizeY + 2 * VisualConstants.blockMargin);
             SolidBrush myBrush = new SolidBrush(VisualConstants.boardBackground);
             myBlock.FillRectangle(myBrush, OverrideBlock);   //fill the block with the background color, which makes it disappear.
         }
