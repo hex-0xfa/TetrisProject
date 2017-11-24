@@ -42,7 +42,7 @@
             this.socreNumber = new System.Windows.Forms.Label();
             this.levelNumber = new System.Windows.Forms.Label();
             this.linesNumber = new System.Windows.Forms.Label();
-            this.test = new System.Windows.Forms.Label();
+            this.gameOverLabel = new System.Windows.Forms.Label();
             this.TheTimer = new System.Windows.Forms.Timer(this.components);
             this.UpKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.DownKeyTimer = new System.Windows.Forms.Timer(this.components);
@@ -50,12 +50,14 @@
             this.RightKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelBoard.SuspendLayout();
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelBoard
             // 
             this.panelBoard.BackColor = System.Drawing.Color.Blue;
+            this.panelBoard.Controls.Add(this.gameOverLabel);
             this.panelBoard.Location = new System.Drawing.Point(15, 48);
             this.panelBoard.Name = "panelBoard";
             this.panelBoard.Size = new System.Drawing.Size(350, 630);
@@ -199,16 +201,18 @@
             this.linesNumber.Text = "0";
             this.linesNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // test
+            // gameOverLabel
             // 
-            this.test.AutoSize = true;
-            this.test.ForeColor = System.Drawing.Color.White;
-            this.test.Location = new System.Drawing.Point(383, 593);
-            this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(287, 15);
-            this.test.TabIndex = 17;
-            this.test.Text = "You have lost, click here to replay";
-            this.test.Visible = false;
+            this.gameOverLabel.BackColor = System.Drawing.Color.Navy;
+            this.gameOverLabel.Font = new System.Drawing.Font("Snap ITC", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameOverLabel.ForeColor = System.Drawing.Color.Gold;
+            this.gameOverLabel.Location = new System.Drawing.Point(0, 285);
+            this.gameOverLabel.Name = "gameOverLabel";
+            this.gameOverLabel.Size = new System.Drawing.Size(350, 60);
+            this.gameOverLabel.TabIndex = 17;
+            this.gameOverLabel.Text = "GAME OVER";
+            this.gameOverLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gameOverLabel.Visible = false;
             // 
             // TheTimer
             // 
@@ -250,7 +254,6 @@
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(682, 700);
             this.Controls.Add(this.tetrisMenu);
-            this.Controls.Add(this.test);
             this.Controls.Add(this.linesNumber);
             this.Controls.Add(this.levelNumber);
             this.Controls.Add(this.socreNumber);
@@ -270,6 +273,7 @@
             this.Text = "Tetris";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyUp);
+            this.panelBoard.ResumeLayout(false);
             this.tetrisMenu.ResumeLayout(false);
             this.tetrisMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -291,7 +295,7 @@
         private System.Windows.Forms.Label socreNumber;
         private System.Windows.Forms.Label levelNumber;
         private System.Windows.Forms.Label linesNumber;
-        private System.Windows.Forms.Label test;
+        private System.Windows.Forms.Label gameOverLabel;
         private System.Windows.Forms.Timer TheTimer;
         private System.Windows.Forms.Timer UpKeyTimer;
         private System.Windows.Forms.Timer DownKeyTimer;

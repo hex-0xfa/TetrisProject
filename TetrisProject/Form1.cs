@@ -98,7 +98,7 @@ namespace TetrisProject
 
             ResetLevelInactive();
 
-            test.Visible = false;
+            gameOverLabel.Visible = false;
 
             ClearAllKeys();
         }
@@ -161,7 +161,7 @@ namespace TetrisProject
 
         public void StartNewGame()  //Inactive Game Pause
         {
-            test.Visible = false;
+            gameOverLabel.Visible = false;
             ResetScore();
             ResetLines();
             RestartLevel();
@@ -183,7 +183,7 @@ namespace TetrisProject
         {
             if (currentGameStatus == PlayStatus.Game)
             {
-                test.Visible = true;   //tell the user they have lost
+                gameOverLabel.Visible = true;   //tell the user they have lost
 
                 ChangeGameStatus(PlayStatus.Inactive);
             }
