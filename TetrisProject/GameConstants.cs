@@ -87,6 +87,8 @@ namespace TetrisProject
 
         public static int validPiecePostionY = pieceGridSizeY + rowNumber;
 
+        public static int speedUp = 10;
+
         //Defined by Omar Ahmed
 
 

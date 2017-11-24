@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelBoard = new System.Windows.Forms.Panel();
             this.tetrisMenu = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.test = new System.Windows.Forms.Label();
+            this.TheTimer = new System.Windows.Forms.Timer(this.components);
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +72,8 @@
             this.tetrisMenu.Size = new System.Drawing.Size(682, 28);
             this.tetrisMenu.TabIndex = 2;
             this.tetrisMenu.Text = "menuStrip1";
+            this.tetrisMenu.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyDown);
+            this.tetrisMenu.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tetrisMenu_KeyUp);
             // 
             // gameToolStripMenuItem
             // 
@@ -251,6 +255,10 @@
             this.test.Text = "You have lost, click here to replay";
             this.test.Visible = false;
             // 
+            // TheTimer
+            // 
+            this.TheTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // TetrisForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -307,6 +315,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label test;
+        private System.Windows.Forms.Timer TheTimer;
     }
 }
 

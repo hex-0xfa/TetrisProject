@@ -7,11 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TetrisProject
 {
     public partial class TetrisForm : Form
     {
+        DateTime startTime;                      //used to pause the timer
+
+        int restTime;                            //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
 
@@ -73,6 +77,8 @@ namespace TetrisProject
             ResetLevelInactive();
 
             test.Visible = false;
+
+            this.Focus();
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -97,109 +103,46 @@ namespace TetrisProject
             {
                 currentGameStatus = PlayStatus.Inactive;
                 playPauseButton.Text = "Play";
+                TheTimer.Enabled = false;
             }
             else if(myPlayStatus == PlayStatus.Game)
             {
                 currentGameStatus = PlayStatus.Game;
                 playPauseButton.Text = "Pause";
+                TheTimer.Enabled = true;
+                startTime = DateTime.Now;
             }
             else
             {
                 currentGameStatus = PlayStatus.Pause;
                 playPauseButton.Text = "Resume";
+                TheTimer.Enabled = false;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (currentGameStatus == PlayStatus.Game)
-            {
-                currentPiece.DisappearBoard(panelBoard);
-
-                int status = currentPiece.Falling(myBoard);
-
-                if (status == 1)            //The piece is fallen on the board
-                {
-                    myBoard.AddPiece(currentPiece);
-
-                    int lines = myBoard.CheckAndClearLines();
-                    AddLinesCleared(lines);
-
-                    Board.ClearDisplayBoard(panelBoard);
-                    myBoard.DisplayBoard();
-
-                    if (myBoard.CheckLoss())
-                    {
-                        LostGame();
-                    }
-                    currentPiece = nextPiece;
-                    nextPiece = Piece.GenerateRandomPieceOnTop();
-                    currentPiece.DisplayBoard(panelBoard);
-                    Piece.DisappearNext(nextBlockPanel);
-                    nextPiece.DisplayNext(nextBlockPanel);
-                }
-                else
-                {
-                    currentPiece.DisplayBoard(panelBoard);
-                    myBoard.DisplayBoard();
-                }
-            }
+            Falling();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (currentGameStatus == PlayStatus.Game)
-            {
-                currentPiece.DisappearBoard(panelBoard);
-
-                int status = currentPiece.MoveLeft(myBoard);
-
-                currentPiece.DisplayBoard(panelBoard);
-
-                myBoard.DisplayBoard();
-            }
+            MoveLeft();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (currentGameStatus == PlayStatus.Game)
-            {
-                currentPiece.DisappearBoard(panelBoard);
-
-                int status = currentPiece.MoveRight(myBoard);
-
-                currentPiece.DisplayBoard(panelBoard);
-
-                myBoard.DisplayBoard();
-            }
+            MoveRight();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (currentGameStatus == PlayStatus.Game)
-            {
-                currentPiece.DisappearBoard(panelBoard);
-
-                int status = currentPiece.CheckRotateClockwise(myBoard);
-
-                currentPiece.DisplayBoard(panelBoard);
-
-                myBoard.DisplayBoard();
-            }
+            ClockwiseRotating();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (currentGameStatus == PlayStatus.Game)
-            {
-                currentPiece.DisappearBoard(panelBoard);
-
-                int status = currentPiece.CheckRotateCounterClockwise(myBoard);
-
-                currentPiece.DisplayBoard(panelBoard);
-
-                myBoard.DisplayBoard();
-            }
+            CounterClockwiseRotating();
         }
 
         public void QuitProgram()  //All three
@@ -209,7 +152,10 @@ namespace TetrisProject
 
         public void ExitGame()  // Game  Pause
         {
-            ChangeGameStatus(PlayStatus.Inactive);
+            if ((currentGameStatus == PlayStatus.Game) || (currentGameStatus == PlayStatus.Pause))
+            {
+                ChangeGameStatus(PlayStatus.Inactive);
+            }
         }
 
         public void StartNewGame()  //Inactive Game Pause
@@ -223,30 +169,39 @@ namespace TetrisProject
             Piece.DisappearNext(nextBlockPanel);
             nextPiece.DisplayNext(nextBlockPanel);
             test.Visible = false;
-            ChangeGameStatus(PlayStatus.Game);
             ResetScore();
             ResetLines();
             RestartLevel();
-            //start the timers
+            TheTimer.Interval = (int) GameConstants.baseInterval;
+            ChangeGameStatus(PlayStatus.Game);
         }
 
-        public void LostGame()
+        public void LostGame()  //game
         {
-            test.Visible = true;   //tell the user they have lost
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                test.Visible = true;   //tell the user they have lost
 
-            ChangeGameStatus(PlayStatus.Inactive);
+                ChangeGameStatus(PlayStatus.Inactive);
+            }
         }
 
         public void PauseGame()    //Game
         {
-            ChangeGameStatus(PlayStatus.Pause);
-            //set the timer
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                restTime = (DateTime.Now.Subtract(startTime)).Milliseconds;
+                ChangeGameStatus(PlayStatus.Pause);
+            }
         }
 
         public void ResumeGame()   //Pasue
         {
-            ChangeGameStatus(PlayStatus.Game);
-            //set the timer
+            if (currentGameStatus == PlayStatus.Pause)
+            {
+                TheTimer.Interval = TheTimer.Interval - restTime;
+                ChangeGameStatus(PlayStatus.Game);
+            }
         }
 
         public void LoadGame()     //Inactive
@@ -366,6 +321,165 @@ namespace TetrisProject
             if(nextPiece != null)
             {
                 nextPiece.DisplayNext(nextBlockPanel);
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TheTimer.Interval = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, (double)(currentLevel - 1)));
+            restTime = 0;
+            startTime = DateTime.Now;
+            Falling();
+        }
+
+        private void MoveLeft()
+        {
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.MoveLeft(myBoard);
+
+                currentPiece.DisplayBoard(panelBoard);
+
+                myBoard.DisplayBoard();
+            }
+        }
+
+        private void MoveRight()
+        {
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.MoveRight(myBoard);
+
+                currentPiece.DisplayBoard(panelBoard);
+
+                myBoard.DisplayBoard();
+            }
+        }
+
+        private void ClockwiseRotating()
+        {
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.CheckRotateClockwise(myBoard);
+
+                currentPiece.DisplayBoard(panelBoard);
+
+                myBoard.DisplayBoard();
+            }
+        }
+
+        private void CounterClockwiseRotating()
+        {
+                if (currentGameStatus == PlayStatus.Game)
+                {
+                    currentPiece.DisappearBoard(panelBoard);
+
+                    int status = currentPiece.CheckRotateCounterClockwise(myBoard);
+
+                    currentPiece.DisplayBoard(panelBoard);
+
+                    myBoard.DisplayBoard();
+                }
+        }
+
+        private void Falling()
+        {
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                currentPiece.DisappearBoard(panelBoard);
+
+                int status = currentPiece.Falling(myBoard);
+
+                if (status == 1)            //The piece is fallen on the board
+                {
+                    myBoard.AddPiece(currentPiece);
+
+                    int lines = myBoard.CheckAndClearLines();
+                    AddLinesCleared(lines);
+
+                    Board.ClearDisplayBoard(panelBoard);
+                    myBoard.DisplayBoard();
+
+                    if (myBoard.CheckLoss())
+                    {
+                        LostGame();
+                    }
+                    currentPiece = nextPiece;
+                    nextPiece = Piece.GenerateRandomPieceOnTop();
+                    currentPiece.DisplayBoard(panelBoard);
+                    Piece.DisappearNext(nextBlockPanel);
+                    nextPiece.DisplayNext(nextBlockPanel);
+                }
+                else
+                {
+                    currentPiece.DisplayBoard(panelBoard);
+                    myBoard.DisplayBoard();
+                }
+            }
+        }
+
+        private void tetrisMenu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Left)
+            {
+                MoveLeft();
+            }
+            else if(e.KeyCode == Keys.Right)
+            {
+                MoveRight();
+            }
+            else if(e.KeyCode == Keys.Up)
+            {
+                ClockwiseRotating();
+            }
+            else if(e.KeyCode == Keys.Down)
+            {
+                CounterClockwiseRotating();
+            }
+            else if (e.KeyCode == Keys.Space)
+            {
+                IncreaseSpeed();
+            }
+            else if(e.Control == true)
+            {
+                if(e.KeyCode == Keys.P)
+                {
+                    PauseGame();
+                }
+                else if(e.KeyCode == Keys.R)
+                {
+                    ResumeGame();
+                }
+            }
+        }
+
+        private void tetrisMenu_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Space)
+            {
+                DecreaseSpeed();
+            }
+        }
+
+        private void IncreaseSpeed()
+        {
+            if(currentGameStatus == PlayStatus.Game)
+            {
+                TheTimer.Interval = TheTimer.Interval / GameConstants.speedUp;
+            }
+        }
+
+        private void DecreaseSpeed()
+        {
+            if (currentGameStatus == PlayStatus.Game)
+            {
+                TheTimer.Interval = TheTimer.Interval * GameConstants.speedUp;
             }
         }
     }
