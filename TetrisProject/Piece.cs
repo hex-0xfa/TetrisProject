@@ -154,7 +154,7 @@ namespace TetrisProject
 
         public int MoveLeft(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, -1, false);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, -1);
 
             if (statusCode == 1)
             {
@@ -171,7 +171,7 @@ namespace TetrisProject
 
         public int MoveRight(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, 1, false);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, 1);
 
             if (statusCode == 1)
             {
@@ -226,7 +226,9 @@ namespace TetrisProject
 
             myPieceGrid = Piece.RotateClockwise(myPieceGrid);
 
-            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0, true);
+            int shift = this.AutofitRotation(myPieceGrid);
+
+            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, shift);
 
             if (statusCode == 1)
             {
@@ -252,6 +254,7 @@ namespace TetrisProject
                 }
                 //it can be rotated
                 PieceGrid = myPieceGrid;
+                pieceColumn = pieceColumn + shift;
                 return 0;
             }
         }
@@ -270,7 +273,9 @@ namespace TetrisProject
 
             myPieceGrid = Piece.RotateCounterclockwise(myPieceGrid);
 
-            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, 0, true);
+            int shift = this.AutofitRotation(myPieceGrid);
+
+            int statusCode = this.CheckCollision(myPieceGrid, myBoard, 0, shift);
 
             if(statusCode == 1)
             {
@@ -296,11 +301,12 @@ namespace TetrisProject
                         break;
                 }
                 PieceGrid = myPieceGrid;
+                pieceColumn = pieceColumn + shift;
                 return 0;
             }
         }
 
-        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn, bool IsRotation)
+        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn)
         {
             for (int row = 0; row < GameConstants.pieceGridSizeY; row++)
             {
@@ -321,9 +327,37 @@ namespace TetrisProject
             return 0;
         }
 
+        private int AutofitRotation(int [,] myPieceGrid)         //auto shift the piece when rotating
+        {
+            int shift = 0;
+            for(int row = 0; row < GameConstants.pieceGridSizeY; row++)
+            {
+                for (int column = 0; column < GameConstants.pieceGridSizeX; column++)
+                {
+                    if(myPieceGrid[row,column] == 1)
+                    {
+                        if ((pieceColumn + shift + column) < (GameConstants.pieceGridSizeX))  // touched the left side wall
+                        {
+                            shift = shift + 1;
+                            column = column - 1;
+                        }
+                        else if ((pieceColumn + shift + column) > (GameConstants.columnNumber + GameConstants.pieceGridSizeX - 1))   //touched the right side wall
+                        {
+                            shift = shift - 1;
+                            column = column - 1;
+                        }
+                        else
+                        {
+                        }
+                    }
+                }
+            }
+            return shift;
+        }
+
         public int Falling(Board myBoard)
         {
-            int statusCode = this.CheckCollision(PieceGrid, myBoard, 1, 0, false);
+            int statusCode = this.CheckCollision(PieceGrid, myBoard, 1, 0);
 
             if (statusCode == 1)
             {
@@ -382,7 +416,7 @@ namespace TetrisProject
             }
         }
 
-        public static int ReturnLeftMostBlock(int[,] myPieceGrid)  //return 1 , 2, 3 or 4, counting from top, left
+        private static int ReturnLeftMostBlock(int[,] myPieceGrid)  //return 1 , 2, 3 or 4, counting from top, left
         {
             int leftMost = 4;
             for (int column = GameConstants.pieceGridSizeX -1; column >= 0; column--)
@@ -398,7 +432,7 @@ namespace TetrisProject
             return leftMost;
         }
 
-        public static int ReturnRightMostBlock(int[,] myPieceGrid) //return 1, 2, 3 or 4, counting top, left
+        private static int ReturnRightMostBlock(int[,] myPieceGrid) //return 1, 2, 3 or 4, counting top, left
         {
             int rightMost = 1;
             for (int column = 0; column < GameConstants.pieceGridSizeX; column++)
@@ -414,7 +448,7 @@ namespace TetrisProject
             return rightMost;
         }
 
-        public static int ReturnBottomMostBlock(int[,] myPieceGrid)  //return 1, 2, 3, or 4, counting from top ,left
+        private static int ReturnBottomMostBlock(int[,] myPieceGrid)  //return 1, 2, 3, or 4, counting from top ,left
         {
             int bottomMost = 1;
             for (int row = 0; row < GameConstants.pieceGridSizeY; row++)
@@ -430,7 +464,7 @@ namespace TetrisProject
             return bottomMost;
         }
 
-        public static void SetRandomPieceInitialPosition(ref int row, ref int column, ref Piece.RotationStateClockwise myRotationStateClockwise, ref int pieceCode)
+        private static void SetRandomPieceInitialPosition(ref int row, ref int column, ref Piece.RotationStateClockwise myRotationStateClockwise, ref int pieceCode)
         {
             Random rand = new Random(Guid.NewGuid().GetHashCode());
             pieceCode = rand.Next(1, GameConstants.totalPieces + 1);  //return 1, 2, 3, 4, 5, 6, 7
