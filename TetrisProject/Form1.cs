@@ -15,7 +15,7 @@ namespace TetrisProject
     {
         DateTime startTime;                       //used to pause the timer              
 
-        int elapsedTime;                             //used to pasue the timer
+        int elapsedTime;                          //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
 
@@ -127,6 +127,7 @@ namespace TetrisProject
                 playPauseButton.Text = "Play";
                 TheTimer.Enabled = false;
                 ClearAllKeys();
+                //enable or disable menu options
             }
             else if(myPlayStatus == PlayStatus.Game)
             {
@@ -146,7 +147,7 @@ namespace TetrisProject
 
         public void QuitProgram()  //All three
         {
-
+            Environment.Exit(0);
         }      
 
         public void ExitGame()  // Game  Pause
@@ -202,7 +203,15 @@ namespace TetrisProject
         {
             if (currentGameStatus == PlayStatus.Pause)
             {
-                TheTimer.Interval = TheTimer.Interval - elapsedTime;
+                if ((TheTimer.Interval - elapsedTime) >= 1)
+                {
+                    TheTimer.Interval = TheTimer.Interval - elapsedTime;
+                }
+                else
+                {
+                    TheTimer.Interval = 1;
+                }
+                
                 ChangeGameStatus(PlayStatus.Game);
             }
         }
@@ -244,6 +253,10 @@ namespace TetrisProject
                 currentLevel = currentLevel + 1;
                 UpdateDisplayLevel();
                 currentFallingSpeed = (int)(currentFallingSpeed * GameConstants.speedIncrease);
+                if(currentFallingSpeed < 1)
+                {
+                    currentFallingSpeed = 1;
+                }
             }
         }
 
@@ -424,7 +437,6 @@ namespace TetrisProject
                     {
                         LostGame();
                     }
-                    ClearAllKeys();
                     currentPiece = nextPiece;
                     nextPiece = Piece.GenerateRandomPieceOnTop();
                     currentPiece.DisplayBoard(panelBoard);
@@ -499,13 +511,33 @@ namespace TetrisProject
             {
                 AdvanceLevel();
             }
+            else if(e.KeyCode == Keys.F1)
+            {
+                PauseGame();
+                MessageBox.Show("press up key for clockwise rotation\n" +
+                                "press down key for counterclockwise rotation\n" +
+                                "press left key for moving left\n" +
+                                "press right key for mving right\n" +
+                                "press space for speed up falling\n" +
+                                "press play button to start or restart play\n" +
+                                "press pause button to pause game\n" +
+                                "press resume button to resume game\n" +
+                                "按上箭头顺时针旋转\n" +
+                                "按下箭头逆时针旋转\n" +
+                                "按左箭头向左移动\n" +
+                                "按右箭头向右移动\n" +
+                                "按空格键加速下降\n" +
+                                "按play按钮开始或重新开始游戏\n" +
+                                "按pasue按钮暂停游戏\n" +
+                                "按resume按钮继续游戏\n");
+            }
             else if(e.Control == true)
             {
                 if(e.KeyCode == Keys.P)
                 {
                     PauseGame();
                 }
-                else if(e.KeyCode == Keys.R)
+                else if(e.KeyCode == Keys.G)
                 {
                     ResumeGame();
                 }
@@ -656,13 +688,20 @@ namespace TetrisProject
             }
             else
             {
-                return (currentFallingSpeed / GameConstants.MinOperationPerFalling);
+                if (currentFallingSpeed / GameConstants.MinOperationPerFalling >= 1)
+                {
+                    return (currentFallingSpeed / GameConstants.MinOperationPerFalling);
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
         private void UpKeyTimer_Tick(object sender, EventArgs e)
         {
-            if(upKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            if(upKeyPressedNumber < GameConstants.RotationHoldTimeMultiplier)
             {
             }
             else
@@ -674,7 +713,7 @@ namespace TetrisProject
 
         private void DownKeyTimer_Tick(object sender, EventArgs e)
         {
-            if(downKeyPressedNumber < GameConstants.keyHoldTimeMultiplier)
+            if(downKeyPressedNumber < GameConstants.RotationHoldTimeMultiplier)
             {                
             }
             else
@@ -734,8 +773,8 @@ namespace TetrisProject
             PauseGame();
             MessageBox.Show("Tetirs for C# windows form\n" +
                             "俄罗斯方块\n\n" +
-                            "developed by Henry Chu\n" +
-                            "由 Henry Chu 开发\n\n" +
+                            "developed by Henry Chu. Assisted by Omar Ahmed\n" +
+                            "由 Henry Chu 开发。 获得了Omar Ahmed的协助\n\n" +
                             "email : chuchenxi_1997@163.com"
                             );
 
