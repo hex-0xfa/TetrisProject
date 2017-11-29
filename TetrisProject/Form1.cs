@@ -127,7 +127,14 @@ namespace TetrisProject
                 playPauseButton.Text = "Play";
                 TheTimer.Enabled = false;
                 ClearAllKeys();
-                //enable or disable menu options
+                newGameToolStripMenuItem.Enabled = true;
+                exitCurrentGameToolStripMenuItem.Enabled = false;
+                saveGameToolStripMenuItem.Enabled = false;
+                loadGameToolStripMenuItem.Enabled = true;
+                pauseToolStripMenuItem.Enabled = false;
+                resumeToolStripMenuItem.Enabled = false;
+                quitProgramToolStripMenuItem.Enabled = true;
+
             }
             else if(myPlayStatus == PlayStatus.Game)
             {
@@ -135,6 +142,13 @@ namespace TetrisProject
                 playPauseButton.Text = "Pause";
                 TheTimer.Enabled = true;
                 startTime = DateTime.Now;
+                newGameToolStripMenuItem.Enabled = true;
+                exitCurrentGameToolStripMenuItem.Enabled = true;
+                saveGameToolStripMenuItem.Enabled = false;
+                loadGameToolStripMenuItem.Enabled = false;
+                pauseToolStripMenuItem.Enabled = true;
+                resumeToolStripMenuItem.Enabled = false;
+                quitProgramToolStripMenuItem.Enabled = true;
             }
             else
             {
@@ -142,6 +156,13 @@ namespace TetrisProject
                 playPauseButton.Text = "Resume";
                 TheTimer.Enabled = false;
                 ClearAllKeys();
+                newGameToolStripMenuItem.Enabled = true;
+                exitCurrentGameToolStripMenuItem.Enabled = true;
+                saveGameToolStripMenuItem.Enabled = true;
+                loadGameToolStripMenuItem.Enabled = true;
+                pauseToolStripMenuItem.Enabled = false;
+                resumeToolStripMenuItem.Enabled = true;
+                quitProgramToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -154,6 +175,12 @@ namespace TetrisProject
         {
             if ((currentGameStatus == PlayStatus.Game) || (currentGameStatus == PlayStatus.Pause))
             {
+                ResetScore();
+                ResetLines();
+                RestartLevel();
+                Board.ClearDisplayBoard(panelBoard);
+                currentPiece.DisappearBoard(panelBoard);
+                Piece.DisappearNext(nextBlockPanel);
                 ChangeGameStatus(PlayStatus.Inactive);
             }
 
@@ -218,12 +245,20 @@ namespace TetrisProject
 
         public void LoadGame()     //Inactive Pause
         {
+            if((currentGameStatus == PlayStatus.Inactive)|(currentGameStatus == PlayStatus.Pause))
+            {
 
+
+                currentGameStatus = PlayStatus.Pause;
+            }
         }
 
         public void SaveGame()     //Pause
         {
+            if(currentGameStatus == PlayStatus.Pause)
+            {
 
+            }
         }
 
         public void AddLinesCleared(int lines)
@@ -533,13 +568,36 @@ namespace TetrisProject
             }
             else if(e.Control == true)
             {
-                if(e.KeyCode == Keys.P)
+                if (e.KeyCode == Keys.P)
                 {
                     PauseGame();
                 }
-                else if(e.KeyCode == Keys.G)
+                else if (e.KeyCode == Keys.G)
                 {
                     ResumeGame();
+                }
+                else if (e.KeyCode == Keys.N)
+                {
+                    StartNewGame();
+                }
+                else if (e.KeyCode == Keys.E)
+                {
+                    ExitGame();
+                }
+                else if(e.KeyCode == Keys.S)
+                {
+                    SaveGame();
+                }
+                else if(e.KeyCode == Keys.O)
+                {
+                    LoadGame();
+                }
+            }
+            else if(e.Alt == true)
+            {
+                if(e.KeyCode == Keys.F4)
+                {
+                    QuitProgram();
                 }
             }
         }
@@ -778,6 +836,41 @@ namespace TetrisProject
                             "email : chuchenxi_1997@163.com"
                             );
 
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartNewGame();
+        }
+
+        private void exitCurrentGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitGame();
+        }
+
+        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveGame();
+        }
+
+        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadGame();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+        }
+
+        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResumeGame();
+        }
+
+        private void quitProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuitProgram();
         }
     }
 }
