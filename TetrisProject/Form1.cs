@@ -668,14 +668,14 @@ namespace TetrisProject
         private void TurnOnUpKey()
         {
             upKeyPressed = true;
-            UpKeyTimer.Interval = GetKeyRefreshRate();
+            UpKeyTimer.Interval = GetRotationRefreshRate();
             UpKeyTimer.Enabled = true;
         }
 
         private void TurnOnDownKey()
         {
             downKeyPressed = true;
-            DownKeyTimer.Interval = GetKeyRefreshRate();
+            DownKeyTimer.Interval = GetRotationRefreshRate();
             DownKeyTimer.Enabled = true;
         }
 
@@ -749,6 +749,25 @@ namespace TetrisProject
                 if (currentFallingSpeed / GameConstants.MinOperationPerFalling >= 1)
                 {
                     return (currentFallingSpeed / GameConstants.MinOperationPerFalling);
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        private int GetRotationRefreshRate()
+        {
+            if (currentFallingSpeed > (GameConstants.baseRotationRefreshRate * GameConstants.MaxRotationPerFalling))
+            {
+                return GameConstants.baseRotationRefreshRate;
+            }
+            else
+            {
+                if (currentFallingSpeed / GameConstants.MaxRotationPerFalling >= 1)
+                {
+                    return (currentFallingSpeed / GameConstants.MaxRotationPerFalling);
                 }
                 else
                 {

@@ -91,10 +91,14 @@ namespace TetrisProject
 
         public const int baseKeyRefreshRate = 50;
 
-        public const int MinOperationPerFalling = 8;
+        public const int MinOperationPerFalling = 6;
+
+        public const int MaxRotationPerFalling = 2;
 
         public const int keyHoldTimeMultiplier = 1;
 
         public const int RotationHoldTimeMultiplier = 2;
+
+        public const int baseRotationRefreshRate = 100;
     }
 }
