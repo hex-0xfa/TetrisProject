@@ -9,7 +9,7 @@ namespace TetrisProject
 {
     class Board
     {
-        private int[,] BoardArray;       //The 2-dimensional array for the state of the board
+        public int[,] BoardArray;       //The 2-dimensional array for the state of the board
 
         private Panel myPanel;           //the panel for the board
 

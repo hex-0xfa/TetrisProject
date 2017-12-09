@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TetrisProject
 {
@@ -15,13 +19,13 @@ namespace TetrisProject
     {
         DateTime startTime;                       //used to pause the timer              
 
-        int elapsedTime;                          //used to pasue the timer
+        int elapsedTime;                //x               //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
 
         private Piece nextPiece;                  //used to point to the next piece
 
-        private Board myBoard;                    //used to do the calculations and provide abstaction with the board class
+        private Board myBoard;           //x         //used to do the calculations and provide abstaction with the board class
 
         private int currentFallingSpeed;          //keep the current normal falling speed
 
@@ -46,11 +50,11 @@ namespace TetrisProject
 
         private PlayStatus currentGameStatus;   //The current game state
 
-        private int currentLevel;        //The current level of this game
+        private int currentLevel;    //x    //The current level of this game
 
-        private int linesCleared;        //The lines cleared
+        private int linesCleared;   //x     //The lines cleared
 
-        private int scores;              //The scores earned
+        private int scores;      //x        //The scores earned
 
         private int upKeyPressedNumber;
 
@@ -59,6 +63,14 @@ namespace TetrisProject
         private int leftKeyPressedNumber;
 
         private int rightKeyPressedNumber;
+
+        private BinaryFormatter saveFormatter;
+
+        private FileStream output;
+
+        private BinaryFormatter loadFormatter;
+
+        private FileStream input;
 
         public TetrisForm()              //constructor
         {
@@ -101,6 +113,10 @@ namespace TetrisProject
             gameOverLabel.Visible = false;
 
             ClearAllKeys();
+
+            saveFormatter = new BinaryFormatter();
+
+            loadFormatter = new BinaryFormatter();
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -247,7 +263,75 @@ namespace TetrisProject
         {
             if((currentGameStatus == PlayStatus.Inactive)|(currentGameStatus == PlayStatus.Pause))
             {
+                DialogResult result;
+                string fileName;
+                using (OpenFileDialog fileChooser = new OpenFileDialog())
+                {
+                    result = fileChooser.ShowDialog();
+                    fileName = fileChooser.FileName;
+                }
+                if(result == DialogResult.OK)
+                {
+                    if(string.IsNullOrEmpty(fileName))
+                    {
+                        MessageBox.Show("The inputted file name is not valid");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            myBoard = new Board(panelBoard);
+                            input = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                            SavedClass loadClass = (SavedClass)loadFormatter.Deserialize(input);
+                            for(int i = 0; i < (GameConstants.rowNumber + GameConstants.pieceGridSizeY); i++)
+                            {
+                                for(int j = 0; j < GameConstants.columnNumber; j++)
+                                {
+                                    myBoard.BoardArray[i, j] = loadClass.BoardArray[i, j];
+                                }
+                            }
+                            elapsedTime = loadClass.ElaspedTime;
+                            currentLevel = loadClass.CurrentLevel;
+                            linesCleared = loadClass.LinesCleared;
+                            scores = loadClass.Scores;
 
+                            UpdateDisplayScore();
+                            UpdateDisplayLevel();
+                            UpdateDisplayLevel();
+
+                            Board.ClearDisplayBoard(panelBoard);
+                            myBoard.DisplayBoard();
+
+                            currentPiece?.DisappearBoard(panelBoard);
+                            currentPiece = Piece.GenerateRandomPieceOnTop();
+                            currentPiece.DisplayBoard(panelBoard);
+
+                            Piece.DisappearNext(nextBlockPanel);
+                            nextPiece = Piece.GenerateRandomPieceOnTop();
+                            nextPiece.DisplayNext(nextBlockPanel);
+
+                            currentFallingSpeed = (int)(GameConstants.baseInterval * Math.Pow(GameConstants.speedIncrease, currentLevel - 1));
+                            if (currentFallingSpeed < 1)
+                            {
+                                currentFallingSpeed = 1;
+                            }
+                            if (currentFallingSpeed > GameConstants.maximumFastFallingSpeed)
+                            {
+                                increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
+                            }
+                            else
+                            {
+                                increasedSpeed = currentFallingSpeed;
+                            }
+                            TheTimer.Interval = currentFallingSpeed;
+                            input.Dispose();
+                        }
+                        catch (SerializationException)
+                        {
+                            MessageBox.Show("Error writing to file");
+                        }
+                    }
+                }
 
                 currentGameStatus = PlayStatus.Pause;
             }
@@ -257,7 +341,52 @@ namespace TetrisProject
         {
             if(currentGameStatus == PlayStatus.Pause)
             {
+                DialogResult result;
+                string fileName;
 
+                using (SaveFileDialog fileChooser = new SaveFileDialog())
+                {
+                    fileChooser.CheckFileExists = false;
+                    result = fileChooser.ShowDialog();
+                    fileName = fileChooser.FileName;
+                }
+
+                if(result == DialogResult.OK)
+                {
+                    if(string.IsNullOrEmpty(fileName))
+                    {
+                        MessageBox.Show("The inputted file name is not valid");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            output = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
+                            SavedClass mySavedClass = new SavedClass(myBoard.BoardArray, elapsedTime, currentLevel, linesCleared, scores);
+                            saveFormatter.Serialize(output, mySavedClass);
+                            output.Dispose();
+                        }
+                        catch(IOException)
+                        {
+                            MessageBox.Show("Error opening file");
+                        }
+                        catch(SerializationException)
+                        {
+                            MessageBox.Show("Error writing to file");
+                        }
+                        catch(FormatException)
+                        {
+                            MessageBox.Show("Invalid format");
+                        }
+                    }
+                }
+                //string json;
+                //SavedClass mySavedClass = new SavedClass(myBoard.BoardArray, elapsedTime, currentLevel, linesCleared, scores);
+                //json = JsonConvert.SerializeObject(mySavedClass);
+                //SavedClass DeClass = JsonConvert.DeserializeObject<SavedClass>(json);
+                
+                //json = JsonConvert.SerializeObject(DeClass);
+                //MessageBox.Show(json);
             }
         }
 
@@ -598,6 +727,9 @@ namespace TetrisProject
                 if(e.KeyCode == Keys.F4)
                 {
                     QuitProgram();
+                }
+                if(e.KeyCode == Keys.C)
+                {
                 }
             }
         }

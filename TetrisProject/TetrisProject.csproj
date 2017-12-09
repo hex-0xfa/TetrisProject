@@ -35,6 +35,10 @@
     <ApplicationIcon>TetrisIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Downloads\Json100r3\Bin\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,14 +54,13 @@
   <ItemGroup>
     <Compile Include="BlockGraphics.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="FileSaveLoad.cs" />
     <Compile Include="GameConstants.cs" />
-    <Compile Include="InputHandler.cs" />
     <Compile Include="LeftLPiece.cs" />
     <Compile Include="LeftSPiece.cs" />
     <Compile Include="LongPiece.cs" />
     <Compile Include="RightLPiece.cs" />
     <Compile Include="RIghtSPiece.cs" />
+    <Compile Include="SavedClass.cs" />
     <Compile Include="SquarePiece.cs" />
     <Compile Include="TetrisTimer.cs" />
     <Compile Include="TPiece.cs" />
