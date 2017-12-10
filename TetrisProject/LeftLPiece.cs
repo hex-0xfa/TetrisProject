@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TetrisProject
 {
+    /// <summary>
+    /// Child class of piece that implement left L piece
+    /// </summary>
     class LeftLPiece : Piece
     {
-        public LeftLPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)
+        public LeftLPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)  //constructor
          : base (newRotationSateClockwise, newRow, newColumn, GameConstants.numberLeftLPiece)
         {
             PieceGrid = LeftLPiece.ConfigureMap();
@@ -18,7 +21,7 @@ namespace TetrisProject
             }
         }
 
-        public static int[,] ConfigureMap()
+        public static int[,] ConfigureMap()        //the bit map for left L piece
         {
             int[,] newPieceGrid = { { 0, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 1, 1, 1 }, { 0, 0, 0, 0 } };
             return newPieceGrid;

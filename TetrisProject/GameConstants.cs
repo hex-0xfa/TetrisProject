@@ -9,9 +9,9 @@ namespace TetrisProject
 {
     static class GameConstants
     {
-
-        //Defined by Chenxi Chu
-
+        /// <summary>
+        /// Used for store constants related to the game, this is usually common for multiple classes
+        /// </summary>
         public const int rowNumber = 18;          //The number of rows for the game
 
         public const int columnNumber = 10;       //The number of columns for the game
@@ -52,7 +52,7 @@ namespace TetrisProject
 
         public const int totalPieces = 7;         //The total kind of pieces
 
-        //The number of pieces
+        //The ID number of pieces
 
         public const int numberLongPiece = 1;
 
@@ -84,21 +84,21 @@ namespace TetrisProject
 
         public const int numberTPiece = 7;
 
-
+        //the maximmum valid piece x and y position
         public static int validPiecePositionX = pieceGridSizeX - 1 + columnNumber;
 
         public static int validPiecePostionY = pieceGridSizeY + rowNumber;
 
-        public const int baseKeyRefreshRate = 50;
+        public const int baseKeyRefreshRate = 50;                //the base key refresh rate
 
-        public const int MinOperationPerFalling = 6;
+        public const int MinKeyPerFalling = 6;                   //the minimum times the direction key will be pressed per falling
 
-        public const int MaxRotationPerFalling = 2;
+        public const int MaxRotationPerFalling = 2;              //the maximum times the rotation key will be pressed per falling
 
-        public const int keyHoldTimeMultiplier = 1;
+        public const int keyHoldTimeMultiplier = 1;              //how many second keys to ignore before execute continuously
 
-        public const int RotationHoldTimeMultiplier = 2;
+        public const int RotationHoldTimeMultiplier = 2;         //how many second rotation to ignore before execute continuously
 
-        public const int baseRotationRefreshRate = 100;
+        public const int baseRotationRefreshRate = 100;          //the base rotation refresh speed
     }
 }

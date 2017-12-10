@@ -9,6 +9,9 @@ namespace TetrisProject
 {
     class Board
     {
+        /// <summary>
+        /// Modeling the board as a two dimensional array onto which the pieces fall
+        /// </summary>
         public int[,] BoardArray;       //The 2-dimensional array for the state of the board
 
         private Panel myPanel;           //the panel for the board
@@ -128,7 +131,7 @@ namespace TetrisProject
             return youLoss;
         }
 
-        public void ClearBottumLine()
+        public void ClearBottumLine()   //clear the buttom line, used for cheat
         {
             for (int tryRow = GameConstants.rowNumber + GameConstants.pieceGridSizeY; tryRow > 1; tryRow--)
             {

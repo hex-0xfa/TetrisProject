@@ -11,53 +11,62 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 
+/// <summary>
+/// Henry Chu
+/// 819751290
+/// Tetris Game
+/// </summary>
 namespace TetrisProject
 {
+    /// <summary>
+    /// The Form which handles most the functionalities of this program
+    /// </summary>
     public partial class TetrisForm : Form
     {
         DateTime startTime;                       //used to pause the timer              
 
-        int elapsedTime;                //x               //used to pasue the timer
+        int elapsedTime;                          //used to pasue the timer
 
         private Piece currentPiece;               //used to point to the current piece
 
         private Piece nextPiece;                  //used to point to the next piece
 
-        private Board myBoard;           //x         //used to do the calculations and provide abstaction with the board class
+        private Board myBoard;                    //used to do the calculations and provide abstaction with the board class
 
         private int currentFallingSpeed;          //keep the current normal falling speed
 
         private int increasedSpeed;               //The speed after increase
 
-        private bool upKeyPressed;
+        private bool upKeyPressed;                //used to indicate whether up key is pressed
 
-        private bool downKeyPressed;
+        private bool downKeyPressed;              //used to indicate whether down key is pressed
 
-        private bool leftKeyPressed;
+        private bool leftKeyPressed;              //used to indicate whether left key is presssed
 
-        private bool rightKeyPressed;
+        private bool rightKeyPressed;             //used to indicate whether right key is pressed
 
-        private bool spaceKeyPressed;
+        private bool spaceKeyPressed;             //used to indicate whether space key is pressed
 
-        private bool cheated;
+        private bool cheated;                     //used to indicate whether the clear line cheat key is pressed
 
-        private enum PlayStatus          //The Status of the current game
+        private enum PlayStatus                   //The Status of the current game
         {
             Inactive,                    //The game has not been played.
             Game,                        //The game is currently playing
             Pause                        //The game is paused
         }
 
-        private PlayStatus currentGameStatus;   //The current game state
+        private PlayStatus currentGameStatus;     //The current game state
 
-        private int currentLevel;    //x    //The current level of this game
+        private int currentLevel;                 //The current level of this game
 
-        private int linesCleared;   //x     //The lines cleared
+        private int linesCleared;                 //The lines cleared
 
-        private int scores;      //x        //The scores earned
+        private int scores;                       //The scores earned
 
+        //below are counts for how many times the key have been pressed starting from one pause or restary
+        //for the use of firist ignore it for a while then move the piece rapidly
         private int upKeyPressedNumber;
 
         private int downKeyPressedNumber;
@@ -66,21 +75,21 @@ namespace TetrisProject
 
         private int rightKeyPressedNumber;
 
-        private BinaryFormatter saveFormatter;
+        private BinaryFormatter saveFormatter;    //binary formatter for saved file
 
-        private FileStream output;
+        private FileStream output;                //File stream for saved file
 
-        private BinaryFormatter loadFormatter;
+        private BinaryFormatter loadFormatter;    //binary formatter for loaded file
 
-        private FileStream input;
-
-        public TetrisForm()              //constructor
+        private FileStream input;                 //File stream for loaded file
+        
+        public TetrisForm()                       //constructor
         {
-            InitializeComponent();
+            InitializeComponent();                //initilize the components
 
-            cheatLabel.Visible = false;
+            cheatLabel.Visible = false;           //make the clear line cheat label not visible
 
-            currentPiece = null;
+            currentPiece = null;                  //make all the piece and board point to null
 
             nextPiece = null;
 
@@ -106,26 +115,24 @@ namespace TetrisProject
 
             this.panelBoard.BackColor = VisualConstants.boardBackground;    //set the background of the panel
 
-            // above not perfect for setting the sizes
-
-            ResetScore();
+            ResetScore();                          //reset scores ande other things
 
             ResetLines();
 
             ResetLevelInactive();
 
-            gameOverLabel.Visible = false;
+            gameOverLabel.Visible = false;         //make the game over label not visible
 
-            ClearAllKeys();
+            ClearAllKeys();                        //all keys are not pressed
 
-            saveFormatter = new BinaryFormatter();
+            saveFormatter = new BinaryFormatter(); //initialize the save nd load binary formatter
 
             loadFormatter = new BinaryFormatter();
 
-            ExitCheatMode();
+            ExitCheatMode();                       //start without cheat
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(System.IO.Directory.GetCurrentDirectory() + @"\ranking.txt", true))
-            {
+            {                                      //create a ranking txt file in the same directory if it is not already created
             }
         }
 
@@ -133,21 +140,21 @@ namespace TetrisProject
         {
             if (currentGameStatus == PlayStatus.Inactive)
             {
-                StartNewGame();
+                StartNewGame();                   //start new game
             }
             else if (currentGameStatus == PlayStatus.Game)
             {
-                PauseGame();
+                PauseGame();                      //pause the game
             }
             else if (currentGameStatus == PlayStatus.Pause)
             {
-                ResumeGame();
+                ResumeGame();                     //resume the game
             }
         }
 
         private void ChangeGameStatus(PlayStatus myPlayStatus)   //changing the state of this game
         {
-            if(myPlayStatus == PlayStatus.Inactive)
+            if(myPlayStatus == PlayStatus.Inactive)              //change state to inactive
             {
                 currentGameStatus = PlayStatus.Inactive;
                 playPauseButton.Text = "Play";
@@ -162,7 +169,7 @@ namespace TetrisProject
                 quitProgramToolStripMenuItem.Enabled = true;
 
             }
-            else if(myPlayStatus == PlayStatus.Game)
+            else if(myPlayStatus == PlayStatus.Game)            //change state to game
             {
                 currentGameStatus = PlayStatus.Game;
                 playPauseButton.Text = "Pause";
@@ -176,7 +183,7 @@ namespace TetrisProject
                 resumeToolStripMenuItem.Enabled = false;
                 quitProgramToolStripMenuItem.Enabled = true;
             }
-            else
+            else                                                //change state to pause
             {
                 currentGameStatus = PlayStatus.Pause;
                 playPauseButton.Text = "Resume";
@@ -192,12 +199,12 @@ namespace TetrisProject
             }
         }
 
-        public void QuitProgram()  //All three
+        public void QuitProgram()                 //Quit the game application
         {
             Environment.Exit(0);
         }      
 
-        public void ExitGame()  // Game  Pause
+        public void ExitGame()                    //Exit current game
         {
             if ((currentGameStatus == PlayStatus.Game) || (currentGameStatus == PlayStatus.Pause))
             {
@@ -212,28 +219,28 @@ namespace TetrisProject
 
             //could redisplay the panel
         }
-
-        public void StartNewGame()  //Inactive Game Pause
+         
+        public void StartNewGame()                //start a new game
         {
-            gameOverLabel.Visible = false;
-            ResetScore();
+            gameOverLabel.Visible = false;        //game over label not visiible
+            ResetScore();                         //reset data
             ResetLines();
             RestartLevel();
-            Board.ClearDisplayBoard(panelBoard);
+            Board.ClearDisplayBoard(panelBoard);  //create new board, current piece and next piece and display them
             myBoard = new Board(panelBoard);
             myBoard.DisplayBoard();
-            currentPiece = Piece.GenerateRandomPieceOnTop();
+            currentPiece = Piece.GenerateRandomPieceOnTop();   //use of polynominal
             currentPiece.DisplayBoard(panelBoard);
             nextPiece = Piece.GenerateRandomPieceOnTop();
             Piece.DisappearNext(nextBlockPanel);
             nextPiece.DisplayNext(nextBlockPanel);
-            currentFallingSpeed = (int)GameConstants.baseInterval;
+            currentFallingSpeed = (int)GameConstants.baseInterval;  //set the tick speed for both common and increased speed
             increasedSpeed = (int)GameConstants.maximumFastFallingSpeed;
             TheTimer.Interval = currentFallingSpeed;
-            ChangeGameStatus(PlayStatus.Game);
+            ChangeGameStatus(PlayStatus.Game);   //start the game
         }
 
-        public void LostGame()  //game
+        public void LostGame()                    //exeute when the player lost, insert the score into the ranking txt file
         {
             if (currentGameStatus == PlayStatus.Game)
             {
@@ -241,6 +248,7 @@ namespace TetrisProject
 
                 ChangeGameStatus(PlayStatus.Inactive);
 
+                //insert the current score into the ranking txt file, highest score top
                 int tempScore = 0;
 
                 string sb = string.Empty;
@@ -276,17 +284,18 @@ namespace TetrisProject
             }
         }
 
-        public void PauseGame()    //Game
+        public void PauseGame()                   //Pause the game
         {
             if (currentGameStatus == PlayStatus.Game)
             {
-                elapsedTime = (DateTime.Now.Subtract(startTime)).Milliseconds;
+                elapsedTime = (DateTime.Now.Subtract(startTime)).Milliseconds;   //store the elasped time to prevent people gainning advantage from pausing
                 ChangeGameStatus(PlayStatus.Pause);
             }
         }
 
-        public void ResumeGame()   //Pasue
+        public void ResumeGame()                  //Resume the game
         {
+            //set the timer tick based on the elaspedtime
             if (currentGameStatus == PlayStatus.Pause)
             {
                 if ((TheTimer.Interval - elapsedTime) >= 1)
@@ -302,7 +311,7 @@ namespace TetrisProject
             }
         }
 
-        public void LoadGame()     //Inactive Pause
+        public void LoadGame()                    //Load a saved game
         {
             if((currentGameStatus == PlayStatus.Inactive)|(currentGameStatus == PlayStatus.Pause))
             {
@@ -380,7 +389,7 @@ namespace TetrisProject
             }
         }
 
-        public void SaveGame()     //Pause
+        public void SaveGame()                    //Save the current game
         {
             if(currentGameStatus == PlayStatus.Pause)
             {
@@ -426,7 +435,7 @@ namespace TetrisProject
             }
         }
 
-        public void AddLinesCleared(int lines)
+        public void AddLinesCleared(int lines)    //Add certain lines to data
         {
             if ((lines < 1) || (lines > GameConstants.pieceGridSizeY))
             {
@@ -440,14 +449,14 @@ namespace TetrisProject
             }
         }
 
-        private void AddScores(int lines)
+        private void AddScores(int lines)         //Add scores to data
         {
             scores = scores + currentLevel * GameConstants.ModifiedBasePoints(lines);
             UpdateDisplayScore();
         }
 
-        private void AdvanceLevel()
-        {
+        private void AdvanceLevel()               //Advance level by one and updating tick speed based on it
+        { 
             if ((currentGameStatus == PlayStatus.Game) || (currentGameStatus == PlayStatus.Pause))
             {
                 currentLevel = currentLevel + 1;
@@ -460,13 +469,13 @@ namespace TetrisProject
             }
         }
 
-        private void AddLines(int lines)
+        private void AddLines(int lines)          //add lines to data
         {
             linesCleared = linesCleared + lines;
             UpdateDisplayLines();
         }
 
-        //Scores Display and reset Related
+        //Scores Display and reset Related for all three kinds of data
 
         private void UpdateDisplayScore()
         {
@@ -508,7 +517,7 @@ namespace TetrisProject
         }
 
         //display related functions
-
+        //change the color of the play button from red to green when a mouse hover through it
         private void label1_MouseHover(object sender, EventArgs e)
         {
             playPauseButton.ForeColor = Color.Green;
@@ -524,42 +533,40 @@ namespace TetrisProject
         {
             if (currentPiece != null)
             {
-                currentPiece.DisplayBoard(panelBoard);
+                currentPiece.DisplayBoard(panelBoard);//display the current piece
             }
             if(myBoard != null)
             {
-                myBoard.DisplayBoard();
+                myBoard.DisplayBoard();               //display the board 
             }
-            //synchronize the redisplay content with active dispaly
         }
 
         private void nextBlockPanel_Paint(object sender, PaintEventArgs e)   //handel the reprinting of the nextblock panel
         {
-            //synchronize the redisplay content with active dispaly
             if(nextPiece != null)
             {
-                nextPiece.DisplayNext(nextBlockPanel);
+                nextPiece.DisplayNext(nextBlockPanel);//dispay the next piece
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)  //event handller for falling
         {
             if(spaceKeyPressed == true)
             {
-                TheTimer.Interval = increasedSpeed;
+                TheTimer.Interval = increasedSpeed;  //if space pressed, then increse speed next tick
             }
             else
             {
                 TheTimer.Interval = currentFallingSpeed;
             }
             elapsedTime = 0;
-            startTime = DateTime.Now;
-            Falling();
+            startTime = DateTime.Now;               //reset the elasped time
+            Falling();                              //let the piece fall
         }
 
         //could add different audio effect for successful or unsuccessful move
 
-        private void MoveLeft()
+        private void MoveLeft()                  //Move the piece to the left and redisplay
         {
             if (currentGameStatus == PlayStatus.Game)
             {
@@ -573,7 +580,7 @@ namespace TetrisProject
             }
         }
 
-        private void MoveRight()
+        private void MoveRight()                 //Move the piece to the right and redisplay
         {
             if (currentGameStatus == PlayStatus.Game)
             {
@@ -587,7 +594,7 @@ namespace TetrisProject
             }
         }
 
-        private void ClockwiseRotating()
+        private void ClockwiseRotating()         //clockwize rotate the piece and redisplay
         {
             if (currentGameStatus == PlayStatus.Game)
             {
@@ -601,7 +608,7 @@ namespace TetrisProject
             }
         }
 
-        private void CounterClockwiseRotating()
+        private void CounterClockwiseRotating()  //counterclockwize rotate the piece and redisplay
         {
                 if (currentGameStatus == PlayStatus.Game)
                 {
@@ -615,7 +622,7 @@ namespace TetrisProject
                 }
         }
 
-        private void Falling()
+        private void Falling()                   //let the piece falls
         {
             if (currentGameStatus == PlayStatus.Game)
             {
@@ -629,7 +636,7 @@ namespace TetrisProject
 
                     int lines = 0;
 
-                    if (cheated == true)
+                    if (cheated == true)    //for the cheat code
                     {
                         myBoard.ClearBottumLine();
                         lines++;
@@ -644,7 +651,7 @@ namespace TetrisProject
 
                     if (myBoard.CheckLoss())
                     {
-                        LostGame();
+                        LostGame();         //game is lost
                     }
                     currentPiece = nextPiece;
                     nextPiece = Piece.GenerateRandomPieceOnTop();
@@ -652,7 +659,7 @@ namespace TetrisProject
                     Piece.DisappearNext(nextBlockPanel);
                     nextPiece.DisplayNext(nextBlockPanel);
                 }
-                else
+                else                         //piece not falling on the board
                 {
                     currentPiece.DisplayBoard(panelBoard);
                     myBoard.DisplayBoard();
@@ -660,7 +667,7 @@ namespace TetrisProject
             }
         }
 
-        private void tetrisMenu_KeyDown(object sender, KeyEventArgs e)
+        private void tetrisMenu_KeyDown(object sender, KeyEventArgs e)       //keyboard handler when 
         {
             if (e.KeyCode == Keys.Left)
             {
@@ -822,8 +829,8 @@ namespace TetrisProject
                 }
             }
         }
-
-        private void ClearAllKeys()
+        
+        private void ClearAllKeys()              //make all keys unpressed
         {
             TurnOffLeftKey();
             TurnOffRightKey();
@@ -832,6 +839,7 @@ namespace TetrisProject
             DecreaseSpeed();
         }
 
+        //turn on and off certain keys
         private void TurnOnLeftKey()
         {
             leftKeyPressed = true;
@@ -861,6 +869,7 @@ namespace TetrisProject
             DownKeyTimer.Enabled = true;
         }
 
+        //increase the speed when the space key is pressed
         private void IncreaseSpeed()
         {
             spaceKeyPressed = true;
@@ -915,22 +924,24 @@ namespace TetrisProject
             downKeyPressedNumber = 0;
         }
 
+        //decrese the speed when the space key is unpressed
         private void DecreaseSpeed()
         {
             spaceKeyPressed = false;
         }
 
+        //get the refresh rates for both direction keys and rotation keys
         private int GetKeyRefreshRate()
         {
-            if (currentFallingSpeed > (GameConstants.baseKeyRefreshRate * GameConstants.MinOperationPerFalling))
+            if (currentFallingSpeed > (GameConstants.baseKeyRefreshRate * GameConstants.MinKeyPerFalling))
             {
                 return GameConstants.baseKeyRefreshRate;
             }
             else
             {
-                if (currentFallingSpeed / GameConstants.MinOperationPerFalling >= 1)
+                if (currentFallingSpeed / GameConstants.MinKeyPerFalling >= 1)
                 {
-                    return (currentFallingSpeed / GameConstants.MinOperationPerFalling);
+                    return (currentFallingSpeed / GameConstants.MinKeyPerFalling);
                 }
                 else
                 {
@@ -958,6 +969,7 @@ namespace TetrisProject
             }
         }
 
+        //below's function happens when the corresponding keys are pressed
         private void UpKeyTimer_Tick(object sender, EventArgs e)
         {
             if(upKeyPressedNumber < GameConstants.RotationHoldTimeMultiplier)
@@ -1006,6 +1018,7 @@ namespace TetrisProject
             rightKeyPressedNumber++;
         }
 
+        //handling button click on the menu
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             PauseGame();
@@ -1074,6 +1087,19 @@ namespace TetrisProject
             QuitProgram();
         }
 
+        private void highScoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+            int[] scoreBank = getTenTopScore();
+            string output = string.Empty;
+            for (int i = 0; i < 10; i++)
+            {
+                output = output + (i + 1).ToString() + ":" + "\t" + scoreBank[i].ToString() + "\n";
+            }
+            MessageBox.Show(output);
+        }
+
+        //enter and exit cheat mode
         private void EnterCheatMode()
         {
             cheated = true;
@@ -1086,19 +1112,7 @@ namespace TetrisProject
             cheatLabel.Visible = false;
         }
 
-        private void highScoreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PauseGame();
-            int[] scoreBank = getTenTopScore();
-            string output = string.Empty;
-            for(int i = 0; i < 10; i++)
-            {
-                output = output + (i+1).ToString() +  ":" + "\t" + scoreBank[i].ToString() + "\n";
-            }
-            MessageBox.Show(output);
-        }
-
-        private int[] getTenTopScore()
+        private int[] getTenTopScore()                 //get the highest ten scores from the ranking txt file
         {
             int[] scoreRank = new int[10];
 

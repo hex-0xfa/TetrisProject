@@ -15,6 +15,9 @@ namespace TetrisProject
     //square piece            cyan            6
     //Tpiece                  black           7
 
+    /// <summary>
+    /// Model the piece that are falling and can be manipulated by the player
+    /// </summary>
     abstract class Piece
     {
         public enum RotationStateClockwise             //The rotation status enum
@@ -152,7 +155,7 @@ namespace TetrisProject
 
         //for the following code, the int returns 0 for successful move, 1 for other pieces or walls blocking (including falling)
 
-        public int MoveLeft(Board myBoard)
+        public int MoveLeft(Board myBoard)          //Move the piece to the left
         {
             int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, -1);
 
@@ -169,7 +172,7 @@ namespace TetrisProject
             }
         }
 
-        public int MoveRight(Board myBoard)
+        public int MoveRight(Board myBoard)         //Move the piece to the right
         {
             int statusCode = this.CheckCollision(PieceGrid, myBoard, 0, 1);
 
@@ -186,7 +189,7 @@ namespace TetrisProject
             }
         }
 
-        protected static int[,] RotateCounterclockwise(int [,] myPieceGrid)
+        protected static int[,] RotateCounterclockwise(int [,] myPieceGrid)    //rotate the piece counterclockwise
         {
             int[,] newPieceGird = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  //need to be changed for chanoing block size.
             for (int i = 0; i < GameConstants.pieceGridSizeX; i++)
@@ -199,7 +202,7 @@ namespace TetrisProject
             return newPieceGird;
         }
 
-        protected static int[,] RotateClockwise(int[,] myPieceGrid)
+        protected static int[,] RotateClockwise(int[,] myPieceGrid)            //rotate the piece clockwise
         {
             int[,] newPieceGird = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  //need to be changed for chanoing block size.
             for (int i = 0; i < GameConstants.pieceGridSizeX; i++)
@@ -212,7 +215,7 @@ namespace TetrisProject
             return newPieceGird;
         }
 
-        public int CheckRotateClockwise(Board myBoard)
+        public int CheckRotateClockwise(Board myBoard)       //check whether the piece can rotate clockwise
         {
             int[,] myPieceGrid = new int[GameConstants.pieceGridSizeY, GameConstants.pieceGridSizeX];
 
@@ -259,7 +262,7 @@ namespace TetrisProject
             }
         }
 
-        public int CheckRotateCounterClockwise(Board myBoard)
+        public int CheckRotateCounterClockwise(Board myBoard)// check whether the piece can rotate counterclockwise
         {
             int[,] myPieceGrid = new int[GameConstants.pieceGridSizeY, GameConstants.pieceGridSizeX];
 
@@ -306,7 +309,7 @@ namespace TetrisProject
             }
         }
 
-        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn)
+        private int CheckCollision(int [,] myPieceGrid, Board myBoard, int offsetRow, int offsetColumn) //check for collison with the board
         {
             for (int row = 0; row < GameConstants.pieceGridSizeY; row++)
             {
@@ -327,7 +330,7 @@ namespace TetrisProject
             return 0;
         }
 
-        private int AutofitRotation(int [,] myPieceGrid)         //auto shift the piece when rotating
+        private int AutofitRotation(int [,] myPieceGrid)     //auto shift the piece when rotating
         {
             int shift = 0;
             for(int row = 0; row < GameConstants.pieceGridSizeY; row++)
@@ -355,7 +358,7 @@ namespace TetrisProject
             return shift;
         }
 
-        public int Falling(Board myBoard)
+        public int Falling(Board myBoard)                    //make the piece fall
         {
             int statusCode = this.CheckCollision(PieceGrid, myBoard, 1, 0);
 
@@ -373,12 +376,9 @@ namespace TetrisProject
             }
         }
 
-        //Normally we don't need this method, could be implemented in cheat mode
-        //public abstract int MovingUp(Board myBoard);
-
         private int pieceRow;                  //from 1 to 22
 
-        public int PieceRow
+        public int PieceRow                    //get propety for pieceRow
         {
             get
             {
@@ -388,7 +388,7 @@ namespace TetrisProject
 
         private int pieceColumn;               //from 1 to 13
 
-        public int PieceColumn
+        public int PieceColumn                 //get property for pieceColumn 
         {
             get
             {
@@ -416,6 +416,7 @@ namespace TetrisProject
             }
         }
 
+        //the below function are used to randomize the place where the piece start to fall
         private static int ReturnLeftMostBlock(int[,] myPieceGrid)  //return 1 , 2, 3 or 4, counting from top, left
         {
             int leftMost = 4;
@@ -464,7 +465,7 @@ namespace TetrisProject
             return bottomMost;
         }
 
-        private static void SetRandomPieceInitialPosition(ref int row, ref int column, ref Piece.RotationStateClockwise myRotationStateClockwise, ref int pieceCode)
+        private static void SetRandomPieceInitialPosition(ref int row, ref int column, ref Piece.RotationStateClockwise myRotationStateClockwise, ref int pieceCode)  //set a random position for a piece randomly generated
         {
             Random rand = new Random(Guid.NewGuid().GetHashCode());
             pieceCode = rand.Next(1, GameConstants.totalPieces + 1);  //return 1, 2, 3, 4, 5, 6, 7
@@ -518,7 +519,7 @@ namespace TetrisProject
             column = rand2.Next(leftMostColumn, rightMostColumn + 1);
         }
 
-        public static Piece GenerateRandomPieceOnTop()
+        public static Piece GenerateRandomPieceOnTop()   //generate the piece randomly on top of the board but just outside and can not be seen
         {
             Piece myPiece;
 

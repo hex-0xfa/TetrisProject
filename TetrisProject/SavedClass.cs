@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace TetrisProject
 {
-    [Serializable]
+    /// <summary>
+    /// Date saved into the saved file
+    /// </summary>
+    [Serializable]                               //serialize this object
     class SavedClass
     {
-        public int[,] BoardArray;
+        public int[,] BoardArray;                //the board array representation
 
-        public int ElaspedTime { get; set; }
+        public int ElaspedTime { get; set; }     //the elasped time
 
-        public int CurrentLevel { get; set; }
+        public int CurrentLevel { get; set; }    //the current level
         
-        public int LinesCleared { get; set; }
+        public int LinesCleared { get; set; }    //the lines cleared
 
-        public int Scores { get; set; }
+        public int Scores { get; set; }          //the score
 
-        public SavedClass(int[,]newBoardArray, int newElaspedTime, int newCurrentLevel, int newLinesCleared, int newScores)
+        public SavedClass(int[,]newBoardArray, int newElaspedTime, int newCurrentLevel, int newLinesCleared, int newScores)  //constructor
         {
             BoardArray = newBoardArray;
             ElaspedTime = newElaspedTime;

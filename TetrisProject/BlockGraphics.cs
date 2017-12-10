@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace TetrisProject
 {
+    /// <summary>
+    /// Handling the low level block display for the tetris game
+    /// </summary>
     public static class BlockGraphics
     {
         public static void DisplayBlock(int blcokNumber, Panel DisplayPanel, int row, int column)  //display a block accroding to the direction given, check for valid input.

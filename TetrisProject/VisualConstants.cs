@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace TetrisProject
 {
+    /// <summary>
+    /// Used for store constants related to the display and layout of the form and blocks
+    /// </summary>
     static class VisualConstants
     {
         //Layout Pixels
@@ -52,15 +55,15 @@ namespace TetrisProject
 
         //Colors
 
-        public static Color formColor = Color.Black;
+        public static Color formColor = Color.Black;       //the background color
 
-        public static Color boardBackground = Color.Blue;
+        public static Color boardBackground = Color.Blue;    //the board color
 
-        public static Color marginColor = Color.White;
+        public static Color marginColor = Color.White;     //the color of the margin of the blocks
 
         //Fonts
 
-        public static string DefaultFont = "Comic Sans MS";   //The default font to use when displaying texts. (unused for now)
+        public static string DefaultFont = "Comic Sans MS";   //The default font to use when displaying texts.
 
         //Colors of the Pieces
 

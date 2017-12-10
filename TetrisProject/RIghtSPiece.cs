@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TetrisProject
 {
+    /// <summary>
+    /// Child class of piece that implement right S piece
+    /// </summary>
     class RIghtSPiece : Piece
     {
-        public RIghtSPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)
+        public RIghtSPiece(RotationStateClockwise newRotationSateClockwise, int newRow, int newColumn)  //constructor
          : base (newRotationSateClockwise, newRow, newColumn, GameConstants.numberRightSPiece)
         {
             PieceGrid = RIghtSPiece.ConfigureMap();
@@ -18,7 +21,7 @@ namespace TetrisProject
             }
         }
 
-        public static int[,] ConfigureMap()
+        public static int[,] ConfigureMap()        //the bit map for right S piece
         {
             int[,] newPieceGrid = { { 0, 0, 0, 0 }, { 0, 0, 1, 1 }, { 0, 1, 1, 0 }, { 0, 0, 0, 0 } };
             return newPieceGrid;
