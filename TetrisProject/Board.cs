@@ -127,5 +127,20 @@ namespace TetrisProject
             }
             return youLoss;
         }
+
+        public void ClearBottumLine()
+        {
+            for (int tryRow = GameConstants.rowNumber + GameConstants.pieceGridSizeY; tryRow > 1; tryRow--)
+            {
+                for (int Trycolumn = 1; Trycolumn <= GameConstants.columnNumber; Trycolumn++)
+                {
+                    BoardArray[tryRow - 1, Trycolumn - 1] = BoardArray[tryRow - 1 - 1, Trycolumn - 1];  //assign this line to the previous line
+                }
+            }
+            for (int Trycolumn = 1; Trycolumn <= GameConstants.columnNumber; Trycolumn++)
+            {
+                BoardArray[0, Trycolumn - 1] = 0;   //assign the top line to all zero
+            }
+        }
     }
 }

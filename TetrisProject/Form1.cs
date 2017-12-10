@@ -41,6 +41,8 @@ namespace TetrisProject
 
         private bool spaceKeyPressed;
 
+        private bool cheated;
+
         private enum PlayStatus          //The Status of the current game
         {
             Inactive,                    //The game has not been played.
@@ -75,6 +77,8 @@ namespace TetrisProject
         public TetrisForm()              //constructor
         {
             InitializeComponent();
+
+            cheatLabel.Visible = false;
 
             currentPiece = null;
 
@@ -117,6 +121,8 @@ namespace TetrisProject
             saveFormatter = new BinaryFormatter();
 
             loadFormatter = new BinaryFormatter();
+
+            ExitCheatMode();
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -591,7 +597,16 @@ namespace TetrisProject
                 {
                     myBoard.AddPiece(currentPiece);
 
-                    int lines = myBoard.CheckAndClearLines();
+                    int lines = 0;
+
+                    if (cheated == true)
+                    {
+                        myBoard.ClearBottumLine();
+                        lines++;
+                    }
+
+                    lines = lines + myBoard.CheckAndClearLines();
+
                     AddLinesCleared(lines);
 
                     Board.ClearDisplayBoard(panelBoard);
@@ -730,6 +745,11 @@ namespace TetrisProject
                 }
                 if(e.KeyCode == Keys.C)
                 {
+                    EnterCheatMode();
+                }
+                if(e.KeyCode == Keys.X)
+                {
+                    ExitCheatMode();
                 }
             }
         }
@@ -1022,6 +1042,18 @@ namespace TetrisProject
         private void quitProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             QuitProgram();
+        }
+
+        private void EnterCheatMode()
+        {
+            cheated = true;
+            cheatLabel.Visible = true;
+        }
+
+        private void ExitCheatMode()
+        {
+            cheated = false;
+            cheatLabel.Visible = false;
         }
     }
 }

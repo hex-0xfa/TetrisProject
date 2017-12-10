@@ -34,6 +34,16 @@
             this.gameOverLabel = new System.Windows.Forms.Label();
             this.tetrisMenu = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitCurrentGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.quitProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,16 +61,7 @@
             this.DownKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.LeftKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.RightKeyTimer = new System.Windows.Forms.Timer(this.components);
-            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitCurrentGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.saveGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.quitProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cheatLabel = new System.Windows.Forms.Label();
             this.panelBoard.SuspendLayout();
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
@@ -120,6 +121,77 @@
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.gameToolStripMenuItem.Text = "Game";
             // 
+            // newGameToolStripMenuItem
+            // 
+            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            this.newGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.newGameToolStripMenuItem.Text = "New Game";
+            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            // 
+            // exitCurrentGameToolStripMenuItem
+            // 
+            this.exitCurrentGameToolStripMenuItem.Name = "exitCurrentGameToolStripMenuItem";
+            this.exitCurrentGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+E";
+            this.exitCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.exitCurrentGameToolStripMenuItem.Text = "Exit Current Game";
+            this.exitCurrentGameToolStripMenuItem.Click += new System.EventHandler(this.exitCurrentGameToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(266, 6);
+            // 
+            // saveGameToolStripMenuItem
+            // 
+            this.saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
+            this.saveGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
+            this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.saveGameToolStripMenuItem.Text = "Save Game";
+            this.saveGameToolStripMenuItem.Click += new System.EventHandler(this.saveGameToolStripMenuItem_Click);
+            // 
+            // loadGameToolStripMenuItem
+            // 
+            this.loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
+            this.loadGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
+            this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.loadGameToolStripMenuItem.Text = "Load Game";
+            this.loadGameToolStripMenuItem.Click += new System.EventHandler(this.loadGameToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(266, 6);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
+            // resumeToolStripMenuItem
+            // 
+            this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
+            this.resumeToolStripMenuItem.ShortcutKeyDisplayString = "Ctri+G";
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.resumeToolStripMenuItem.Text = "Resume";
+            this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(266, 6);
+            // 
+            // quitProgramToolStripMenuItem
+            // 
+            this.quitProgramToolStripMenuItem.Name = "quitProgramToolStripMenuItem";
+            this.quitProgramToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
+            this.quitProgramToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
+            this.quitProgramToolStripMenuItem.Text = "Quit Program";
+            this.quitProgramToolStripMenuItem.Click += new System.EventHandler(this.quitProgramToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -133,14 +205,14 @@
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.ShortcutKeyDisplayString = "F1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(145, 26);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -271,82 +343,22 @@
             // 
             this.RightKeyTimer.Tick += new System.EventHandler(this.RightKeyTimer_Tick);
             // 
-            // newGameToolStripMenuItem
+            // cheatLabel
             // 
-            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.newGameToolStripMenuItem.Text = "New Game";
-            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
-            // 
-            // exitCurrentGameToolStripMenuItem
-            // 
-            this.exitCurrentGameToolStripMenuItem.Name = "exitCurrentGameToolStripMenuItem";
-            this.exitCurrentGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+E";
-            this.exitCurrentGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.exitCurrentGameToolStripMenuItem.Text = "Exit Current Game";
-            this.exitCurrentGameToolStripMenuItem.Click += new System.EventHandler(this.exitCurrentGameToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(266, 6);
-            // 
-            // saveGameToolStripMenuItem
-            // 
-            this.saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
-            this.saveGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
-            this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.saveGameToolStripMenuItem.Text = "Save Game";
-            this.saveGameToolStripMenuItem.Click += new System.EventHandler(this.saveGameToolStripMenuItem_Click);
-            // 
-            // loadGameToolStripMenuItem
-            // 
-            this.loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
-            this.loadGameToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
-            this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.loadGameToolStripMenuItem.Text = "Load Game";
-            this.loadGameToolStripMenuItem.Click += new System.EventHandler(this.loadGameToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(266, 6);
-            // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.pauseToolStripMenuItem.Text = "Pause";
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
-            // 
-            // resumeToolStripMenuItem
-            // 
-            this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
-            this.resumeToolStripMenuItem.ShortcutKeyDisplayString = "Ctri+G";
-            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.resumeToolStripMenuItem.Text = "Resume";
-            this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(266, 6);
-            // 
-            // quitProgramToolStripMenuItem
-            // 
-            this.quitProgramToolStripMenuItem.Name = "quitProgramToolStripMenuItem";
-            this.quitProgramToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
-            this.quitProgramToolStripMenuItem.Size = new System.Drawing.Size(269, 26);
-            this.quitProgramToolStripMenuItem.Text = "Quit Program";
-            this.quitProgramToolStripMenuItem.Click += new System.EventHandler(this.quitProgramToolStripMenuItem_Click);
+            this.cheatLabel.AutoSize = true;
+            this.cheatLabel.ForeColor = System.Drawing.Color.Lime;
+            this.cheatLabel.Location = new System.Drawing.Point(608, 67);
+            this.cheatLabel.Name = "cheatLabel";
+            this.cheatLabel.Size = new System.Drawing.Size(15, 15);
+            this.cheatLabel.TabIndex = 12;
+            this.cheatLabel.Text = "C";
             // 
             // TetrisForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(682, 700);
+            this.Controls.Add(this.cheatLabel);
             this.Controls.Add(this.tetrisMenu);
             this.Controls.Add(this.linesNumber);
             this.Controls.Add(this.levelNumber);
@@ -408,6 +420,7 @@
         private System.Windows.Forms.ToolStripMenuItem resumeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem quitProgramToolStripMenuItem;
+        private System.Windows.Forms.Label cheatLabel;
     }
 }
 
