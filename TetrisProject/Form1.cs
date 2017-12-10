@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace TetrisProject
 {
@@ -123,6 +123,10 @@ namespace TetrisProject
             loadFormatter = new BinaryFormatter();
 
             ExitCheatMode();
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(System.IO.Directory.GetCurrentDirectory() + @"\ranking.txt", true))
+            {
+            }
         }
 
         private void PlayPauseButton_Click(object sender, EventArgs e)   //what happens when the play pause button is clikcked
@@ -236,6 +240,39 @@ namespace TetrisProject
                 gameOverLabel.Visible = true;   //tell the user they have lost
 
                 ChangeGameStatus(PlayStatus.Inactive);
+
+                int tempScore = 0;
+
+                string sb = string.Empty;
+
+                using (System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Directory.GetCurrentDirectory() + @"\ranking.txt"))
+                {
+                    string tempString = string.Empty;
+                    while (true)
+                    {
+                        tempString = file.ReadLine();
+                        if ((tempString == null) || (tempString == string.Empty))
+                        {
+                            break;
+                        }
+                        tempScore = int.Parse(tempString);
+                        if (tempScore > scores)
+                        {
+                            sb = sb + tempString + "\n";
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    sb = sb + scores.ToString() + "\n";
+                    if ((tempString != null) && (tempString != string.Empty))
+                    {
+                        sb = sb + tempString + "\n";
+                    }
+                    sb = sb + file.ReadToEnd();
+                }
+                System.IO.File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + @"\ranking.txt", sb);
             }
         }
 
@@ -386,13 +423,6 @@ namespace TetrisProject
                         }
                     }
                 }
-                //string json;
-                //SavedClass mySavedClass = new SavedClass(myBoard.BoardArray, elapsedTime, currentLevel, linesCleared, scores);
-                //json = JsonConvert.SerializeObject(mySavedClass);
-                //SavedClass DeClass = JsonConvert.DeserializeObject<SavedClass>(json);
-                
-                //json = JsonConvert.SerializeObject(DeClass);
-                //MessageBox.Show(json);
             }
         }
 
@@ -1054,6 +1084,42 @@ namespace TetrisProject
         {
             cheated = false;
             cheatLabel.Visible = false;
+        }
+
+        private void highScoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+            int[] scoreBank = getTenTopScore();
+            string output = string.Empty;
+            for(int i = 0; i < 10; i++)
+            {
+                output = output + (i+1).ToString() +  ":" + "\t" + scoreBank[i].ToString() + "\n";
+            }
+            MessageBox.Show(output);
+        }
+
+        private int[] getTenTopScore()
+        {
+            int[] scoreRank = new int[10];
+
+            using (System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Directory.GetCurrentDirectory() + @"\ranking.txt"))
+            {
+                string test = string.Empty;
+                for (int i = 0; i < 10; i++)
+                {
+                    test = file.ReadLine();
+                    if ((test == null) || (test == string.Empty))
+                    {
+                        scoreRank[i] = 0;
+                    }
+                    else
+                    {
+                        scoreRank[i] = int.Parse(test);
+                    }
+                }
+            }
+
+            return scoreRank;
         }
     }
 }

@@ -62,6 +62,7 @@
             this.LeftKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.RightKeyTimer = new System.Windows.Forms.Timer(this.components);
             this.cheatLabel = new System.Windows.Forms.Label();
+            this.highScoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelBoard.SuspendLayout();
             this.tetrisMenu.SuspendLayout();
             this.SuspendLayout();
@@ -196,7 +197,8 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem1,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.highScoreToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.helpToolStripMenuItem.Text = "Help";
@@ -205,14 +207,14 @@
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.ShortcutKeyDisplayString = "F1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(145, 26);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -353,6 +355,13 @@
             this.cheatLabel.TabIndex = 12;
             this.cheatLabel.Text = "C";
             // 
+            // highScoreToolStripMenuItem
+            // 
+            this.highScoreToolStripMenuItem.Name = "highScoreToolStripMenuItem";
+            this.highScoreToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.highScoreToolStripMenuItem.Text = "High Score";
+            this.highScoreToolStripMenuItem.Click += new System.EventHandler(this.highScoreToolStripMenuItem_Click);
+            // 
             // TetrisForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -421,6 +430,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem quitProgramToolStripMenuItem;
         private System.Windows.Forms.Label cheatLabel;
+        private System.Windows.Forms.ToolStripMenuItem highScoreToolStripMenuItem;
     }
 }
 
